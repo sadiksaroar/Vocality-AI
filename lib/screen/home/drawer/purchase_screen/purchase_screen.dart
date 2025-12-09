@@ -261,25 +261,25 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
       ),
       padding: const EdgeInsets.all(16),
       child: Column(
-        mainAxisSize: MainAxisSize.min, // Changed from default
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Personality Icon Box
-          Expanded(
-            flex: 3, // Give proportional space
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: personality['color'],
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Center(
-                child: Text(
-                  personality['id'],
-                  style: const TextStyle(
-                    fontSize: 48,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+          // Personality Icon Box - Use Flexible instead of Expanded to allow Column to size properly
+          Flexible(
+            child: AspectRatio(
+              aspectRatio: 1.2,
+              child: Container(
+                decoration: BoxDecoration(
+                  color: personality['color'],
+                  borderRadius: BorderRadius.circular(16),
+                ),
+                child: Center(
+                  child: Text(
+                    personality['id'],
+                    style: const TextStyle(
+                      fontSize: 48,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
+                    ),
                   ),
                 ),
               ),
@@ -316,7 +316,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
           const SizedBox(height: 8),
           SizedBox(
             width: double.infinity,
-            height: 32, // Fixed height for button
+            height: 32,
             child: ElevatedButton.icon(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
