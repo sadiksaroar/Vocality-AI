@@ -135,7 +135,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
                               crossAxisSpacing: 16,
                               mainAxisSpacing: 16,
                               childAspectRatio:
-                                  0.68, // Changed from 0.75 to fix overflow
+                                  0.68, // Adjusted to accommodate card content height
                             ),
                         itemCount: personalities.length,
                         itemBuilder: (context, index) {
@@ -263,10 +263,10 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
       child: Column(
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Personality Icon Box - Use Flexible instead of Expanded to allow Column to size properly
+          // Personality Icon Box - Use Flexible to avoid constraint conflicts in fixed aspect ratio GridView
           Flexible(
             child: AspectRatio(
-              aspectRatio: 1.2,
+              aspectRatio: 1.2, // Maintains consistent icon container proportions
               child: Container(
                 decoration: BoxDecoration(
                   color: personality['color'],
