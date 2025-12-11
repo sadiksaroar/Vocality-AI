@@ -24,6 +24,29 @@ class $AssetsIconsGen {
   /// File path: assets/icons/Google.png
   AssetGenImage get google => const AssetGenImage('assets/icons/Google.png');
 
+  /// File path: assets/icons/Image AI Analysis.png
+  AssetGenImage get imageAIAnalysis =>
+      const AssetGenImage('assets/icons/Image AI Analysis.png');
+
+  /// File path: assets/icons/Log Out.png
+  AssetGenImage get logOut => const AssetGenImage('assets/icons/Log Out.png');
+
+  /// File path: assets/icons/Profile.png
+  AssetGenImage get profilePng =>
+      const AssetGenImage('assets/icons/Profile.png');
+
+  /// File path: assets/icons/profile.png
+  AssetGenImage get profilePng_ =>
+      const AssetGenImage('assets/icons/profile.png');
+
+  /// File path: assets/icons/Subscriptions.png
+  AssetGenImage get subscriptions =>
+      const AssetGenImage('assets/icons/Subscriptions.png');
+
+  /// File path: assets/icons/Time Packages.png
+  AssetGenImage get timePackages =>
+      const AssetGenImage('assets/icons/Time Packages.png');
+
   /// File path: assets/icons/apple.png
   AssetGenImage get apple => const AssetGenImage('assets/icons/apple.png');
 
@@ -31,17 +54,34 @@ class $AssetsIconsGen {
   AssetGenImage get backIcon =>
       const AssetGenImage('assets/icons/back_icon.png');
 
+  /// File path: assets/icons/hey julie! which gender describes you_.png
+  AssetGenImage get heyJulieWhichGenderDescribesYou => const AssetGenImage(
+    'assets/icons/hey julie! which gender describes you_.png',
+  );
+
   /// File path: assets/icons/k.png
   AssetGenImage get k => const AssetGenImage('assets/icons/k.png');
+
+  /// File path: assets/icons/what should nowlii call you_.png
+  AssetGenImage get whatShouldNowliiCallYou =>
+      const AssetGenImage('assets/icons/what should nowlii call you_.png');
 
   /// List of all assets
   List<AssetGenImage> get values => [
     button,
     container,
     google,
+    imageAIAnalysis,
+    logOut,
+    profilePng,
+    profilePng_,
+    subscriptions,
+    timePackages,
     apple,
     backIcon,
+    heyJulieWhichGenderDescribesYou,
     k,
+    whatShouldNowliiCallYou,
   ];
 }
 

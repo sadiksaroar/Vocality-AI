@@ -1,21 +1,43 @@
-import 'dart:ui' show TextStyle, FontWeight, Color;
-
-import 'package:flutter/src/painting/text_style.dart';
+import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
-class AppTextStyles {
-  static TextStyle medium30 = GoogleFonts.roboto(
-    fontWeight: FontWeight.w500,
-    fontSize: 30,
-    height: 1.0,
-    letterSpacing: 0.0,
-    color: const Color(0xFF0A0A0A),
+class MyTextStyles {
+  static final heading = GoogleFonts.poppins(
+    fontSize: 28,
+    fontWeight: FontWeight.w600,
+    color: Colors.black87,
   );
-  static TextStyle manrope14MediumCenter = GoogleFonts.manrope(
+
+  static final subHeading = GoogleFonts.poppins(
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    color: Colors.grey[700],
+    height: 1.5,
+  );
+
+  static final button = GoogleFonts.poppins(
+    fontSize: 16,
+    fontWeight: FontWeight.w500,
+    color: Colors.white,
+  );
+
+  static final labelText = GoogleFonts.poppins(
     fontSize: 14,
     fontWeight: FontWeight.w500,
-    height: 20 / 14, // line-height = 20px
-    letterSpacing: -0.14, // -1% of 14px
-    color: const Color(0xFF838FA0),
+    color: const Color(0xFF151515),
+    height: 1.8,
+  );
+
+  static final input = GoogleFonts.poppins(
+    fontSize: 15,
+    fontWeight: FontWeight.w400,
+    color: Colors.black87,
+  );
+  // User name / small text
+  static final userName = GoogleFonts.poppins(
+    fontSize: 14,
+    fontWeight: FontWeight.w400,
+    color: const Color(0xFF595959),
+    height: 1.7,
   );
 }

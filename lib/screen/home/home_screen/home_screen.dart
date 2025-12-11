@@ -1,0 +1,204 @@
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:vocality_ai/screen/home/drawer/drawer_screen.dart';
+import 'package:vocality_ai/screen/routing/app_path.dart';
+
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({Key? key}) : super(key: key);
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  String selectedPersonality = 'Personality A';
+  bool isListening = false;
+  int selectedIndex = 0;
+
+  final List<String> tabs = [
+    'Personality\nA',
+    'Personality\nB',
+    'Personality\nC',
+    'Personality\nD',
+  ];
+
+  final List<Color> buttonColors = [
+    const Color(0xFFFFD300),
+    const Color(0xFFFF2D78),
+    const Color(0xFF660033),
+    const Color(0xFF0A1F44),
+  ];
+
+  final List<Color> scaffoldColors = [
+    const Color(0xFFFDD835),
+    const Color(0xFFFF2D78),
+    const Color(0xFF660033),
+    const Color(0xFF0A1F44),
+  ];
+
+  @override
+  Widget build(BuildContext context) {
+    return Scaffold(
+      backgroundColor: scaffoldColors[selectedIndex],
+      drawer: const ProfileDrawer(), // Drawer added here
+      body: SafeArea(
+        child: Column(
+          children: [
+            // Menu Button with Builder to access correct context
+            Padding(
+              padding: const EdgeInsets.all(16.0),
+              child: Align(
+                alignment: Alignment.topLeft,
+                child: Builder(
+                  builder: (context) => IconButton(
+                    icon: const Icon(Icons.menu),
+                    onPressed: () {
+                      Scaffold.of(context).openDrawer();
+                    },
+                    color: selectedIndex >= 2 ? Colors.white : Colors.black,
+                  ),
+                ),
+              ),
+            ),
+            const Spacer(),
+            // Microphone Button
+            GestureDetector(
+              onTap: () {
+                setState(() {
+                  isListening = !isListening;
+                });
+              },
+              child: Container(
+                width: 160,
+                height: 160,
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  shape: BoxShape.circle,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 20,
+                      offset: const Offset(0, 10),
+                    ),
+                  ],
+                ),
+                child: Column(
+                  mainAxisAlignment: MainAxisAlignment.center,
+                  children: [
+                    Icon(
+                      Icons.mic,
+                      size: 48,
+                      color: isListening ? Colors.red : Colors.grey[600],
+                    ),
+                    const SizedBox(height: 8),
+                    Text(
+                      isListening ? 'Listening...' : 'Tap to start',
+                      style: TextStyle(
+                        fontSize: 14,
+                        color: Colors.grey[700],
+                        fontWeight: FontWeight.w500,
+                      ),
+                    ),
+                  ],
+                ),
+              ),
+            ),
+            const Spacer(),
+            // Personality Buttons Box
+            const SizedBox(height: 12),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Container(
+                height: 70,
+                padding: const EdgeInsets.all(8),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(50),
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.1),
+                      blurRadius: 20,
+                      offset: const Offset(0, 4),
+                    ),
+                  ],
+                ),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: List.generate(tabs.length, (index) {
+                    final isSelected = selectedIndex == index;
+                    return GestureDetector(
+                      onTap: () {
+                        setState(() {
+                          selectedIndex = index;
+                        });
+                      },
+                      child: AnimatedContainer(
+                        duration: const Duration(milliseconds: 300),
+                        curve: Curves.easeInOut,
+                        width: 80,
+                        height: 54,
+                        padding: const EdgeInsets.symmetric(
+                          horizontal: 6,
+                          vertical: 6,
+                        ),
+                        decoration: BoxDecoration(
+                          color: isSelected
+                              ? buttonColors[index]
+                              : Colors.grey[200],
+                          borderRadius: BorderRadius.circular(50),
+                        ),
+                        child: Center(
+                          child: Text(
+                            tabs[index],
+                            textAlign: TextAlign.center,
+                            maxLines: 2,
+                            overflow: TextOverflow.ellipsis,
+                            style: TextStyle(
+                              fontSize: 12,
+                              fontWeight: FontWeight.w600,
+                              color: isSelected && index >= 1
+                                  ? Colors.white
+                                  : Colors.black,
+                            ),
+                          ),
+                        ),
+                      ),
+                    );
+                  }),
+                ),
+              ),
+            ),
+            // Image Analysis Button
+            GestureDetector(
+              onTap: () {
+                context.push(AppPath.imageAnalysisScreen);
+              },
+              child: Container(
+                margin: const EdgeInsets.symmetric(horizontal: 16),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 20,
+                  vertical: 10,
+                ),
+                decoration: BoxDecoration(
+                  color: Colors.white,
+                  borderRadius: BorderRadius.circular(25),
+                  border: Border.all(color: Colors.grey[300]!),
+                ),
+                child: const Text(
+                  'Image analysis',
+                  textAlign: TextAlign.center,
+                  style: TextStyle(
+                    color: Colors.black,
+                    fontSize: 12,
+                    fontWeight: FontWeight.w400,
+                  ),
+                ),
+              ),
+            ),
+            const SizedBox(height: 30),
+          ],
+        ),
+      ),
+    );
+  }
+}

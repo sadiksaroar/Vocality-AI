@@ -1,6 +1,10 @@
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:vocality_ai/core/gen/assets.gen.dart';
 import 'package:vocality_ai/widget/custom/custom_text_field.dart';
 import 'package:vocality_ai/widget/custom/sign_in_custom.dart';
+import 'package:vocality_ai/widget/text/text.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({Key? key}) : super(key: key);
@@ -84,10 +88,16 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             color: Colors.white.withOpacity(0.3),
                             shape: BoxShape.circle,
                           ),
-                          child: const Icon(
-                            Icons.arrow_back_ios_new,
-                            color: Colors.black87,
-                            size: 20,
+                          // child: const Icon(
+                          //   Icons.arrow_back_ios_new,
+                          //   color: Colors.black87,
+                          //   size: 20,
+                          // ),
+                          child: Image.asset(
+                            Assets.icons.backIcon.path,
+
+                            width: 20,
+                            height: 20,
                           ),
                         ),
                       ),
@@ -97,11 +107,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       // Title
                       Text(
                         'Forgot password',
-                        style: TextStyle(
-                          fontSize: isSmallScreen ? 26 : 32,
-                          fontWeight: FontWeight.bold,
-                          color: Colors.black87,
-                          height: 1.2,
+                        style: GoogleFonts.inter(
+                          color: const Color(0xFF2E2E2E),
+                          fontSize: 24,
+                          fontWeight: FontWeight.w500,
                         ),
                       ),
                     ],
@@ -111,11 +120,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   // Description
                   Text(
                     'Don\'t worry it occurs, please enter the email address linked with your account.',
-                    style: TextStyle(
-                      fontSize: isSmallScreen ? 14 : 15,
-                      color: Colors.black87,
-                      height: 1.5,
-                    ),
+                    style: MyTextStyles.subHeading,
                   ),
 
                   SizedBox(height: isSmallScreen ? 24 : 32),
@@ -123,6 +128,10 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                   CustomTextField(
                     controller: _emailController,
                     hintText: 'abcdef@gmail.com',
+                    hintStyle: const TextStyle(
+                      color: Colors.grey,
+                      fontSize: 14,
+                    ),
                     keyboardType: TextInputType.emailAddress,
                     validator: (value) {
                       if (value == null || value.isEmpty) {
@@ -149,13 +158,9 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                           vertical: 8,
                         ),
                       ),
-                      child: const Text(
+                      child: Text(
                         'Try another way',
-                        style: TextStyle(
-                          fontSize: 15,
-                          color: Colors.black87,
-                          fontWeight: FontWeight.w500,
-                        ),
+                        style: MyTextStyles.subHeading,
                       ),
                     ),
                   ),
@@ -174,6 +179,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                       //     ),
                       //   );
                       // }
+                      context.push("/passwordChangeScreen");
                     },
                   ),
                 ],
