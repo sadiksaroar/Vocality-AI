@@ -1,6 +1,8 @@
 // import 'package:flutter/material.dart';
 // import 'package:go_router/go_router.dart';
+// import 'package:vocality_ai/core/gen/assets.gen.dart';
 // import 'package:vocality_ai/screen/routing/app_path.dart';
+// import 'package:vocality_ai/widget/text/text.dart';
 
 // class ProfileDrawer extends StatelessWidget {
 //   const ProfileDrawer({super.key});
@@ -9,15 +11,15 @@
 //   Widget build(BuildContext context) {
 //     return Drawer(
 //       child: Container(
-//         color: Colors.white,
+//         color: Color(0xFFFFFFFF),
 //         child: ListView(
 //           padding: EdgeInsets.zero,
 //           children: [
 //             // Profile Header
 //             GestureDetector(
 //               onTap: () {
-//                 context.push('/profileDashboard');
-//                 // Handle navigation to profile dashboard
+//                 Navigator.pop(context); // Close drawer first
+//                 context.push(AppPath.profileDashboard);
 //               },
 //               child: Container(
 //                 padding: const EdgeInsets.fromLTRB(20, 50, 20, 30),
@@ -27,31 +29,20 @@
 //                     Container(
 //                       width: 60,
 //                       height: 60,
-//                       decoration: const BoxDecoration(
-//                         color: Colors.amber,
-//                         shape: BoxShape.circle,
-//                       ),
-//                       child: const Icon(
-//                         Icons.person,
-//                         color: Colors.white,
-//                         size: 32,
-//                       ),
+//                       // decoration: const BoxDecoration(
+//                       //   color: Colors.amber,
+//                       //   shape: BoxShape.circle,
+//                       // ),
+//                       child: Image.asset(Assets.icons.profilePng.path),
 //                     ),
 //                     const SizedBox(height: 12),
 //                     // Name
-//                     const Text(
-//                       'Istiak Ahmed',
-//                       style: TextStyle(
-//                         fontSize: 18,
-//                         fontWeight: FontWeight.w600,
-//                         color: Colors.black87,
-//                       ),
-//                     ),
+//                     Text('Istiak Ahmed', style: MyTextStyles.poppinsBold),
 //                     const SizedBox(height: 4),
 //                     // Email
-//                     const Text(
+//                     Text(
 //                       'istiakahmad@gmail.com',
-//                       style: TextStyle(fontSize: 13, color: Colors.black45),
+//                       style: MyTextStyles.email_10_w400,
 //                     ),
 //                   ],
 //                 ),
@@ -59,57 +50,38 @@
 //             ),
 
 //             // Menu Items
-//             GestureDetector(
+//             _buildMenuItem(
+//               icon: Assets.icons.subscriptions.path,
+//               title: 'Subscriptions',
 //               onTap: () {
+//                 Navigator.pop(context); // Close drawer
 //                 context.push(AppPath.purchaseScreen);
-//                 // Handle navigation
 //               },
-//               child: _buildMenuItem(
-//                 icon: Icons.card_membership,
-//                 iconColor: Colors.amber,
-//                 title: 'Subscriptions',
-//                 onTap: () {
-//                   Navigator.pop(context);
-//                   // Handle navigation
-//                 },
-//               ),
 //             ),
 //             _buildMenuItem(
-//               icon: Icons.access_time,
-//               iconColor: Colors.amber,
+//               icon: Assets.icons.timePackages.path,
 //               title: 'Time Packages',
 //               onTap: () {
 //                 Navigator.pop(context);
-//                 // Handle navigation
+//                 // Add your time packages navigation here
+//                 // context.push(AppPath.timePackagesScreen);
 //               },
 //             ),
-//             GestureDetector(
+//             _buildMenuItem(
+//               icon: Assets.icons.imageAiAnalysis.path,
+//               title: 'Image-AI Analysis',
 //               onTap: () {
-//                 context.push('/imageAnalysisScreen');
+//                 Navigator.pop(context); // Close drawer
+//                 context.push(AppPath.imageAnalysisScreen);
 //               },
-//               child: _buildMenuItem(
-//                 icon: Icons.image,
-//                 iconColor: Colors.amber,
-//                 title: 'Image-AI Analysis',
-//                 onTap: () {
-//                   Navigator.pop(context);
-//                   // Handle navigation
-//                 },
-//               ),
 //             ),
-//             GestureDetector(
+//             _buildMenuItem(
+//               icon: Assets.icons.profileDrawer.path,
+//               title: 'Profile',
 //               onTap: () {
-//                 context.push('/profileDashboard');
+//                 Navigator.pop(context); // Close drawer
+//                 context.push(AppPath.profileDashboard);
 //               },
-//               child: _buildMenuItem(
-//                 icon: Icons.person,
-//                 iconColor: Colors.amber,
-//                 title: 'Profile',
-//                 onTap: () {
-//                   Navigator.pop(context);
-//                   // Handle navigation
-//                 },
-//               ),
 //             ),
 
 //             const SizedBox(height: 10),
@@ -121,7 +93,8 @@
 //               title: 'Log Out',
 //               onTap: () {
 //                 Navigator.pop(context);
-//                 // Handle log out
+//                 // Handle log out logic here
+//                 // Example: context.go(AppPath.logInScreen);
 //               },
 //             ),
 //           ],
@@ -131,21 +104,12 @@
 //   }
 
 //   Widget _buildMenuItem({
-//     required IconData icon,
-//     required Color iconColor,
+//     required String icon,
 //     required String title,
 //     required VoidCallback onTap,
 //   }) {
 //     return ListTile(
-//       leading: Container(
-//         width: 36,
-//         height: 36,
-//         decoration: BoxDecoration(
-//           color: iconColor.withOpacity(0.1),
-//           shape: BoxShape.circle,
-//         ),
-//         child: Icon(icon, color: iconColor, size: 20),
-//       ),
+//       leading: Container(width: 36, height: 36, child: Icon(icon, size: 20)),
 //       title: Text(
 //         title,
 //         style: const TextStyle(
@@ -159,10 +123,11 @@
 //     );
 //   }
 // }
-
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vocality_ai/core/gen/assets.gen.dart';
 import 'package:vocality_ai/screen/routing/app_path.dart';
+import 'package:vocality_ai/widget/text/text.dart';
 
 class ProfileDrawer extends StatelessWidget {
   const ProfileDrawer({super.key});
@@ -171,105 +136,94 @@ class ProfileDrawer extends StatelessWidget {
   Widget build(BuildContext context) {
     return Drawer(
       child: Container(
-        color: Colors.white,
+        color: const Color(0xFFFFFFFF),
         child: ListView(
           padding: EdgeInsets.zero,
           children: [
+            // ==========================
             // Profile Header
+            // ==========================
             GestureDetector(
               onTap: () {
-                Navigator.pop(context); // Close drawer first
+                Navigator.pop(context);
                 context.push(AppPath.profileDashboard);
               },
               child: Container(
                 padding: const EdgeInsets.fromLTRB(20, 50, 20, 30),
                 child: Column(
                   children: [
-                    // Profile Avatar
+                    // Avatar
                     Container(
                       width: 60,
                       height: 60,
-                      decoration: const BoxDecoration(
-                        color: Colors.amber,
-                        shape: BoxShape.circle,
-                      ),
-                      child: const Icon(
-                        Icons.person,
-                        color: Colors.white,
-                        size: 32,
-                      ),
+                      child: Image.asset(Assets.icons.profile.path),
                     ),
                     const SizedBox(height: 12),
+
                     // Name
-                    const Text(
-                      'Istiak Ahmed',
-                      style: TextStyle(
-                        fontSize: 18,
-                        fontWeight: FontWeight.w600,
-                        color: Colors.black87,
-                      ),
-                    ),
+                    Text('Istiak Ahmed', style: MyTextStyles.poppinsBold),
+
                     const SizedBox(height: 4),
+
                     // Email
-                    const Text(
+                    Text(
                       'istiakahmad@gmail.com',
-                      style: TextStyle(fontSize: 13, color: Colors.black45),
+                      style: MyTextStyles.email_10_w400,
                     ),
                   ],
                 ),
               ),
             ),
 
+            // ==========================
             // Menu Items
+            // ==========================
             _buildMenuItem(
-              icon: Icons.card_membership,
-              iconColor: Colors.amber,
+              icon: Assets.icons.subscriptions.path,
               title: 'Subscriptions',
               onTap: () {
-                Navigator.pop(context); // Close drawer
+                Navigator.pop(context);
                 context.push(AppPath.purchaseScreen);
               },
             ),
+
             _buildMenuItem(
-              icon: Icons.access_time,
-              iconColor: Colors.amber,
+              icon: Assets.icons.timePackages.path,
               title: 'Time Packages',
               onTap: () {
                 Navigator.pop(context);
-                // Add your time packages navigation here
-                // context.push(AppPath.timePackagesScreen);
               },
             ),
+
             _buildMenuItem(
-              icon: Icons.image,
-              iconColor: Colors.amber,
+              icon: Assets.icons.imageAIAnalysis.path,
               title: 'Image-AI Analysis',
               onTap: () {
-                Navigator.pop(context); // Close drawer
+                Navigator.pop(context);
                 context.push(AppPath.imageAnalysisScreen);
               },
             ),
+
             _buildMenuItem(
-              icon: Icons.person,
-              iconColor: Colors.amber,
+              icon: Assets.icons.profileDrawer.path,
               title: 'Profile',
               onTap: () {
-                Navigator.pop(context); // Close drawer
+                Navigator.pop(context);
                 context.push(AppPath.profileDashboard);
               },
             ),
 
             const SizedBox(height: 10),
 
-            // Log Out
+            // ==========================
+            // Logout
+            // ==========================
             _buildMenuItem(
-              icon: Icons.logout,
-              iconColor: Colors.amber,
+              icon: Assets.icons.logOut.path,
               title: 'Log Out',
               onTap: () {
-                Navigator.pop(context);
-                // Handle log out logic here
-                // Example: context.go(AppPath.logInScreen);
+                context.pop();
+                // context.go(AppPath.logInScreen);
               },
             ),
           ],
@@ -278,30 +232,24 @@ class ProfileDrawer extends StatelessWidget {
     );
   }
 
+  // ======================================================
+  // Reusable Menu Item (supports both Image Assets & Icons)
+  // ======================================================
   Widget _buildMenuItem({
-    required IconData icon,
-    required Color iconColor,
+    required dynamic icon, // String (asset) or IconData
     required String title,
     required VoidCallback onTap,
+    Color? iconColor,
   }) {
     return ListTile(
-      leading: Container(
+      leading: SizedBox(
         width: 36,
         height: 36,
-        decoration: BoxDecoration(
-          color: iconColor.withOpacity(0.1),
-          shape: BoxShape.circle,
-        ),
-        child: Icon(icon, color: iconColor, size: 20),
+        child: icon is String
+            ? Image.asset(icon) // Asset image
+            : Icon(icon, size: 22, color: iconColor), // Material icon
       ),
-      title: Text(
-        title,
-        style: const TextStyle(
-          fontSize: 15,
-          color: Colors.black87,
-          fontWeight: FontWeight.w500,
-        ),
-      ),
+      title: Text(title, style: MyTextStyles.subscription),
       onTap: onTap,
       contentPadding: const EdgeInsets.symmetric(horizontal: 20, vertical: 4),
     );

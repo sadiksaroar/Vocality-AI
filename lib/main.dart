@@ -62,13 +62,14 @@ class MyApp extends StatelessWidget {
       splitScreenMode: true,
       designSize: const Size(375, 812),
       builder: (context, child) {
+        var themeData = ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          textTheme: GoogleFonts.poppinsTextTheme(),
+        );
         return MaterialApp.router(
           debugShowCheckedModeBanner: false,
           title: 'Flutter Demo',
-          theme: ThemeData(
-            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-            textTheme: GoogleFonts.poppinsTextTheme(),
-          ),
+          theme: themeData,
 
           routerConfig: AppPages.router,
         );

@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:vocality_ai/core/gen/assets.gen.dart';
+import 'package:vocality_ai/widget/text/text.dart';
 
 class PurchaseScreen extends StatefulWidget {
   const PurchaseScreen({super.key});
@@ -21,7 +24,8 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
       'name': 'Personality A',
       'time': 'One free unlock',
       'price': 'Free',
-      'color': Colors.yellow.shade600,
+      'imageAsset': Assets.icons.a,
+      'buttonColor': Colors.green,
       'unlocked': true,
     },
     {
@@ -29,7 +33,8 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
       'name': 'Personality B',
       'time': 'One free unlock',
       'price': '\$29.99',
-      'color': Colors.pink,
+      'imageAsset': Assets.icons.b,
+      'buttonColor': Colors.pink,
       'unlocked': false,
     },
     {
@@ -37,7 +42,8 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
       'name': 'Personality C',
       'time': 'One free unlock',
       'price': '\$39.99',
-      'color': Colors.pink.shade700,
+      'imageAsset': Assets.icons.c,
+      'buttonColor': Colors.pink.shade700,
       'unlocked': false,
     },
     {
@@ -45,7 +51,8 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
       'name': 'Personality D',
       'time': 'One free unlock',
       'price': '\$49.99',
-      'color': Colors.blue.shade800,
+      'imageAsset': Assets.icons.d,
+      'buttonColor': Colors.blue.shade800,
       'unlocked': false,
     },
   ];
@@ -55,10 +62,10 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
     return Scaffold(
       backgroundColor: Colors.yellow.shade600,
       appBar: AppBar(
-        backgroundColor: const Color(0xFFFFC107),
+        backgroundColor: Colors.yellow.shade600,
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black87),
+          icon: Assets.icons.backIcon.image(width: 24, height: 24),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -136,18 +143,19 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
           const SizedBox(height: 32),
 
           // Unlock Personalities Section
-          const Text(
+          Text(
             'Unlock Personalities',
-            style: TextStyle(
-              fontSize: 24,
-              fontWeight: FontWeight.bold,
+            style: GoogleFonts.roboto(
               color: Colors.black,
+              fontSize: 30,
+              fontWeight: FontWeight.w500,
             ),
           ),
+
           const SizedBox(height: 8),
-          const Text(
+          Text(
             'Choose the AI personality that suits you best',
-            style: TextStyle(fontSize: 14, color: Colors.black87),
+            style: MyTextStyles.subHeading,
           ),
           const SizedBox(height: 24),
 
@@ -214,14 +222,10 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         mainAxisSize: MainAxisSize.min,
         children: [
-          Container(
+          SizedBox(
             width: 56,
             height: 56,
-            decoration: BoxDecoration(
-              color: Colors.yellow.shade600,
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(Icons.access_time, color: Colors.white, size: 28),
+            child: Assets.icons.min12.image(width: 24, height: 24),
           ),
           const SizedBox(height: 8),
           Text(
@@ -244,6 +248,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
           const SizedBox(height: 8),
           SizedBox(
             width: double.infinity,
+            height: 47,
             child: ElevatedButton(
               onPressed: () {},
               style: ElevatedButton.styleFrom(
@@ -251,14 +256,11 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(vertical: 10),
                 shape: RoundedRectangleBorder(
-                  borderRadius: BorderRadius.circular(25),
+                  borderRadius: BorderRadius.circular(15),
                 ),
                 elevation: 0,
               ),
-              child: const Text(
-                'Purchase',
-                style: TextStyle(fontWeight: FontWeight.w600, fontSize: 13),
-              ),
+              child: Text('Purchase', style: MyTextStyles.button),
             ),
           ),
         ],
@@ -284,42 +286,62 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
         mainAxisSize: MainAxisSize.min,
         crossAxisAlignment: CrossAxisAlignment.stretch,
         children: [
-          // Personality Icon Box
+          // Personality Icon Box with Background Text
           Expanded(
             flex: 3,
-            child: Container(
-              width: double.infinity,
-              decoration: BoxDecoration(
-                color: personality['color'],
-                borderRadius: BorderRadius.circular(16),
-              ),
-              child: Center(
-                child: Text(
-                  personality['id'],
-                  style: const TextStyle(
-                    fontSize: 48,
-                    fontWeight: FontWeight.bold,
-                    color: Colors.white,
+            child: Stack(
+              children: [
+                // Background ID Text
+                Positioned.fill(
+                  child: Container(
+                    decoration: BoxDecoration(
+                      borderRadius: BorderRadius.circular(16),
+                    ),
+                    child: Center(
+                      child: Text(
+                        personality['id'],
+                        style: TextStyle(
+                          fontSize: 120,
+                          fontWeight: FontWeight.bold,
+                          color: Colors.grey[200],
+                        ),
+                      ),
+                    ),
                   ),
                 ),
-              ),
+                // Image Overlay
+                Container(
+                  width: double.infinity,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(16),
+                  ),
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(16),
+                    child: personality['imageAsset'].image(fit: BoxFit.cover),
+                  ),
+                ),
+              ],
             ),
           ),
           const SizedBox(height: 10),
           Text(
             personality['name'],
-            style: const TextStyle(
-              fontSize: 13,
-              fontWeight: FontWeight.bold,
-              color: Colors.black,
+            style: GoogleFonts.roboto(
+              color: const Color(0xFF0A0A0A),
+              fontSize: 16,
+              fontWeight: FontWeight.w500,
             ),
             textAlign: TextAlign.center,
           ),
           const SizedBox(height: 2),
           Text(
             personality['time'],
-            style: const TextStyle(fontSize: 9, color: Colors.black54),
             textAlign: TextAlign.center,
+            style: GoogleFonts.roboto(
+              color: const Color(0xFF45556C),
+              fontSize: 12,
+              fontWeight: FontWeight.w400,
+            ),
             maxLines: 1,
             overflow: TextOverflow.ellipsis,
           ),
@@ -342,7 +364,7 @@ class _PurchaseScreenState extends State<PurchaseScreen> {
               style: ElevatedButton.styleFrom(
                 backgroundColor: personality['unlocked']
                     ? Colors.green
-                    : personality['color'],
+                    : personality['buttonColor'],
                 foregroundColor: Colors.white,
                 padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
                 shape: RoundedRectangleBorder(
@@ -377,9 +399,9 @@ class SubscriptionPlansScreen extends StatelessWidget {
         mainAxisAlignment: MainAxisAlignment.center,
         children: [
           PlanCard(
-            icon: Icons.flash_on,
-            iconColor: Colors.grey[600]!,
-            iconBgColor: Colors.grey[100]!,
+            icon: Image.asset(Assets.icons.basic.path, width: 28, height: 28),
+            // iconColor: Colors.grey[600]!,
+            // iconBgColor: Colors.grey[100]!,
             planName: 'Basic',
             price: '\$14.99',
             period: '/month',
@@ -394,9 +416,9 @@ class SubscriptionPlansScreen extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           PlanCard(
-            icon: Icons.emoji_events,
-            iconColor: Colors.yellow[700]!,
-            iconBgColor: Colors.yellow[100]!,
+            icon: Image.asset(Assets.icons.premium.path, width: 28, height: 28),
+            // iconColor: Colors.yellow[700]!,
+            // iconBgColor: Colors.yellow[100]!,
             planName: 'Premium',
             price: '\$29.99',
             period: '/2 months',
@@ -412,9 +434,13 @@ class SubscriptionPlansScreen extends StatelessWidget {
           ),
           const SizedBox(height: 16),
           PlanCard(
-            icon: Icons.all_inclusive,
-            iconColor: Colors.grey[600]!,
-            iconBgColor: Colors.grey[100]!,
+            icon: Image.asset(
+              Assets.icons.ultimate.path,
+              width: 28,
+              height: 28,
+            ),
+            // iconColor: Colors.grey[600]!,
+            // iconBgColor: Colors.grey[100]!,
             planName: 'Ultimate',
             price: '\$49.99',
             period: '/2 months',
@@ -434,9 +460,8 @@ class SubscriptionPlansScreen extends StatelessWidget {
 }
 
 class PlanCard extends StatelessWidget {
-  final IconData icon;
-  final Color iconColor;
-  final Color iconBgColor;
+  final Widget icon; // Changed from IconData to Widget
+
   final String planName;
   final String price;
   final String period;
@@ -448,8 +473,7 @@ class PlanCard extends StatelessWidget {
   const PlanCard({
     Key? key,
     required this.icon,
-    required this.iconColor,
-    required this.iconBgColor,
+
     required this.planName,
     required this.price,
     required this.period,
@@ -484,11 +508,9 @@ class PlanCard extends StatelessWidget {
             children: [
               Container(
                 padding: const EdgeInsets.all(10),
-                decoration: BoxDecoration(
-                  color: iconBgColor,
-                  borderRadius: BorderRadius.circular(12),
-                ),
-                child: Icon(icon, color: iconColor, size: 28),
+
+                child:
+                    icon, // Changed from Icon widget to directly use the widget
               ),
               const SizedBox(width: 12),
               Column(

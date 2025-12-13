@@ -27,6 +27,12 @@ class MyTextStyles {
     color: const Color(0xFF151515),
     height: 1.8,
   );
+  static final subscriptionStatus = GoogleFonts.openSans(
+    color: const Color(0xFF1D2838),
+    fontSize: 16,
+    fontWeight: FontWeight.w400,
+    height: 1.50,
+  );
 
   static final input = GoogleFonts.poppins(
     fontSize: 15,
@@ -39,5 +45,22 @@ class MyTextStyles {
     fontWeight: FontWeight.w400,
     color: const Color(0xFF595959),
     height: 1.7,
+  );
+  static final poppinsBold = GoogleFonts.poppins(
+    fontSize: 18,
+    fontWeight: FontWeight.w600,
+    color: const Color(0xFF2E2C2C),
+  );
+  // ignore: non_constant_identifier_names
+  static final email_10_w400 = GoogleFonts.poppins(
+    fontSize: 10,
+    fontWeight: FontWeight.w400,
+    color: const Color(0xFF999999),
+  );
+  static final subscription = GoogleFonts.poppins(
+    color: const Color(0xFF5C5C5C),
+    fontSize: 12,
+    fontWeight: FontWeight.w400,
+    height: 1.40,
   );
 }

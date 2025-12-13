@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:vocality_ai/core/gen/assets.gen.dart';
+import 'package:vocality_ai/widget/color/apps_color.dart';
+import 'package:vocality_ai/widget/text/text.dart';
 
 class ProfileDashboard extends StatelessWidget {
   const ProfileDashboard({super.key});
@@ -12,7 +16,8 @@ class ProfileDashboard extends StatelessWidget {
         backgroundColor: const Color(0xFFFBBF24),
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.white),
+          // icon: const Icon(Icons.arrow_back, color: Colors.white),
+          icon: Image.asset(Assets.icons.backIcon.path, width: 24, height: 24),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -45,14 +50,10 @@ class ProfileDashboard extends StatelessWidget {
                         Container(
                           width: 64,
                           height: 64,
-                          decoration: BoxDecoration(
-                            color: const Color(0xFFFBBF24),
-                            borderRadius: BorderRadius.circular(32),
-                          ),
-                          child: const Icon(
-                            Icons.person,
-                            color: Colors.white,
-                            size: 32,
+
+                          child: Image.asset(
+                            Assets.icons.profile.path,
+                            fit: BoxFit.cover,
                           ),
                         ),
                         const SizedBox(width: 16),
@@ -71,10 +72,10 @@ class ProfileDashboard extends StatelessWidget {
                               const SizedBox(height: 4),
                               Row(
                                 children: [
-                                  const Icon(
-                                    Icons.email_outlined,
-                                    size: 16,
-                                    color: Color(0xFF6B7280),
+                                  Image.asset(
+                                    Assets.icons.emaiMail.path,
+                                    width: 24,
+                                    height: 24,
                                   ),
                                   const SizedBox(width: 4),
                                   const Text(
@@ -100,15 +101,18 @@ class ProfileDashboard extends StatelessWidget {
                             decoration: BoxDecoration(
                               color: const Color(0xFFEFF6FF),
                               borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                color: AppColors.kLightBlueCustom,
+                              ),
                             ),
                             padding: const EdgeInsets.all(16),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Icon(
-                                  Icons.access_time,
-                                  color: Color(0xFF3B82F6),
-                                  size: 24,
+                                Image.asset(
+                                  Assets.icons.minutesLeft.path,
+                                  width: 24,
+                                  height: 24,
                                 ),
                                 const SizedBox(height: 8),
                                 const Text(
@@ -135,17 +139,20 @@ class ProfileDashboard extends StatelessWidget {
                         Expanded(
                           child: Container(
                             decoration: BoxDecoration(
-                              color: const Color(0xFFFAF5FF),
+                              color: AppColors.lightLavender,
                               borderRadius: BorderRadius.circular(16),
+                              border: Border.all(
+                                color: AppColors.lavenderLight,
+                              ),
                             ),
                             padding: const EdgeInsets.all(16),
                             child: Column(
                               crossAxisAlignment: CrossAxisAlignment.start,
                               children: [
-                                const Icon(
-                                  Icons.auto_awesome,
-                                  color: Color(0xFFA855F7),
-                                  size: 24,
+                                Image.asset(
+                                  Assets.icons.personalities.path,
+                                  width: 24,
+                                  height: 24,
                                 ),
                                 const SizedBox(height: 8),
                                 const Text(
@@ -193,27 +200,25 @@ class ProfileDashboard extends StatelessWidget {
                   children: [
                     Row(
                       children: [
-                        const Icon(
-                          Icons.workspace_premium,
-                          color: Color(0xFFEAB308),
-                          size: 20,
+                        Image.asset(
+                          Assets.icons.subscriptionStatus.path,
+                          width: 24,
+                          height: 24,
                         ),
                         const SizedBox(width: 8),
-                        const Text(
+                        Text(
                           'Subscription Status',
-                          style: TextStyle(
-                            fontSize: 14,
-                            fontWeight: FontWeight.w500,
-                            color: Color(0xFF374151),
-                          ),
+                          style: MyTextStyles.subscriptionStatus,
                         ),
                       ],
                     ),
                     const SizedBox(height: 12),
                     Container(
                       decoration: BoxDecoration(
-                        color: const Color(0xFFFFF7ED),
+                        // color: const Color(0xFFFFF7ED),
+                        color: Color(0xFFFFF7ED),
                         borderRadius: BorderRadius.circular(16),
+                        border: Border.all(color: AppColors.lightYellow),
                       ),
                       padding: const EdgeInsets.all(16),
                       width: double.infinity,
@@ -271,26 +276,28 @@ class ProfileDashboard extends StatelessWidget {
                         children: [
                           Row(
                             children: [
-                              const Icon(
-                                Icons.settings,
-                                color: Color(0xFF374151),
-                                size: 20,
+                              Image.asset(
+                                Assets.icons.setting.path,
+                                width: 24,
+                                height: 24,
                               ),
                               const SizedBox(width: 12),
-                              const Text(
+                              Text(
                                 'Settings',
-                                style: TextStyle(
-                                  fontSize: 14,
-                                  fontWeight: FontWeight.w500,
-                                  color: Color(0xFF1F2937),
+                                textAlign: TextAlign.center,
+                                style: GoogleFonts.openSans(
+                                  color: const Color(0xFF354152),
+                                  fontSize: 16,
+                                  fontWeight: FontWeight.w400,
+                                  height: 1.50,
                                 ),
                               ),
                             ],
                           ),
-                          const Icon(
-                            Icons.chevron_right,
-                            color: Color(0xFF9CA3AF),
-                            size: 20,
+                          Image.asset(
+                            Assets.icons.backIconSetting.path,
+                            width: 24,
+                            height: 24,
                           ),
                         ],
                       ),

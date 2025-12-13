@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:vocality_ai/core/gen/assets.gen.dart';
+import 'package:vocality_ai/widget/color/apps_color.dart';
 import 'package:vocality_ai/widget/custom/custom_text_field.dart';
 import 'package:vocality_ai/widget/custom/sign_in_custom.dart';
 
@@ -33,7 +34,7 @@ class _SettingsChnagePasswordState extends State<SettingsChnagePassword> {
     final isSmallScreen = size.width < 360;
 
     return Scaffold(
-      backgroundColor: const Color(0xFFFFC107),
+      backgroundColor: AppColors.goldenYellow,
       body: SafeArea(
         child: SingleChildScrollView(
           child: ConstrainedBox(

@@ -1,6 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
 import 'dart:io';
+
+import 'package:vocality_ai/core/gen/assets.gen.dart';
 
 class ImageAnalysisScreen extends StatefulWidget {
   const ImageAnalysisScreen({super.key});
@@ -52,7 +55,7 @@ class _ImageAnalysisScreenState extends State<ImageAnalysisScreen> {
         backgroundColor: const Color(0xFFFFC107),
         elevation: 0,
         leading: IconButton(
-          icon: const Icon(Icons.arrow_back, color: Colors.black87),
+          icon: Image.asset(Assets.icons.backIcon.path, width: 24, height: 24),
           onPressed: () => Navigator.of(context).pop(),
         ),
       ),
@@ -65,33 +68,67 @@ class _ImageAnalysisScreenState extends State<ImageAnalysisScreen> {
               // Header
               Row(
                 children: [
-                  Icon(Icons.auto_awesome, color: Colors.black87, size: 24),
+                  Image.asset(
+                    Assets.icons.imageAIAnalysisStar.path,
+                    width: 24,
+                    height: 24,
+                  ),
                   const SizedBox(width: 8),
-                  const Text(
+                  Text(
                     'Image AI Analysis',
-                    style: TextStyle(
-                      fontSize: 24,
-                      fontWeight: FontWeight.bold,
-                      color: Colors.black87,
+                    style: GoogleFonts.inter(
+                      color: Colors.black,
+                      fontSize: 30,
+                      fontWeight: FontWeight.w700,
+                      height: 1.20,
                     ),
                   ),
                 ],
               ),
               const SizedBox(height: 8),
-              const Text(
+              Text(
                 'Upload an image for AI-powered insights',
-                style: TextStyle(fontSize: 14, color: Colors.black54),
+                style: GoogleFonts.inter(
+                  color: const Color(0xFF5C5C5C),
+                  fontSize: 18,
+                  fontWeight: FontWeight.w400,
+                  height: 1.56,
+                ),
               ),
+
               const SizedBox(height: 16),
               // Price tag
-              Row(
-                children: [
-                  Icon(Icons.attach_money, color: Colors.black54, size: 18),
-                  const Text(
-                    '\$1.00 per analysis',
-                    style: TextStyle(fontSize: 14, color: Colors.black54),
+              Container(
+                width: 199.06,
+                height: 51.97,
+                decoration: ShapeDecoration(
+                  color: Colors.white.withValues(alpha: 0.25),
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(41073000),
                   ),
-                ],
+                ),
+                padding: const EdgeInsets.symmetric(
+                  horizontal: 12,
+                  vertical: 8,
+                ),
+                child: Row(
+                  children: [
+                    Image.asset(
+                      Assets.icons.doller.path,
+                      width: 18,
+                      height: 18,
+                    ),
+                    Text(
+                      '\$1.00 per analysis',
+                      style: GoogleFonts.inter(
+                        color: Colors.black,
+                        fontSize: 16,
+                        fontWeight: FontWeight.w400,
+                        height: 1.50,
+                      ),
+                    ),
+                  ],
+                ),
               ),
               const SizedBox(height: 24),
 
@@ -125,30 +162,39 @@ class _ImageAnalysisScreenState extends State<ImageAnalysisScreen> {
           Container(
             width: 100,
             height: 100,
-            decoration: const BoxDecoration(
-              color: Color(0xFF880E4F),
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(
-              Icons.image_outlined,
-              color: Colors.white,
-              size: 50,
+
+            child: Center(
+              child: Image.asset(
+                Assets.icons.uploadYourImage.path,
+                width: 91,
+                height: 91,
+              ),
             ),
           ),
           const SizedBox(height: 24),
-          const Text(
+          Text(
             'Upload Your Image',
-            style: TextStyle(
+            textAlign: TextAlign.center,
+            style: GoogleFonts.inter(
+              color: const Color(0xFF1D2838),
               fontSize: 16,
-              fontWeight: FontWeight.w600,
-              color: Colors.black87,
+              fontWeight: FontWeight.w400,
+              height: 1.50,
             ),
           ),
+
           const SizedBox(height: 8),
-          const Text(
+          Text(
             'Choose from camera or gallery',
-            style: TextStyle(fontSize: 14, color: Colors.black54),
+            textAlign: TextAlign.center,
+            style: GoogleFonts.inter(
+              color: const Color(0xFF495565),
+              fontSize: 16,
+              fontWeight: FontWeight.w400,
+              height: 1.50,
+            ),
           ),
+
           const SizedBox(height: 32),
 
           // Take Photo button
@@ -167,12 +213,22 @@ class _ImageAnalysisScreenState extends State<ImageAnalysisScreen> {
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(Icons.camera_alt, size: 20),
+                children: [
+                  Image.asset(
+                    Assets.icons.takePhoto.path,
+                    width: 20,
+                    height: 20,
+                  ),
                   SizedBox(width: 8),
                   Text(
                     'Take Photo',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.inter(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      height: 1.50,
+                    ),
                   ),
                 ],
               ),
@@ -195,12 +251,22 @@ class _ImageAnalysisScreenState extends State<ImageAnalysisScreen> {
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(Icons.photo_library_outlined, size: 20),
+                children: [
+                  Image.asset(
+                    Assets.icons.chooseFromGallery.path,
+                    width: 20,
+                    height: 20,
+                  ),
                   SizedBox(width: 8),
                   Text(
                     'Choose from Gallery',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.inter(
+                      color: const Color(0xFF354152),
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      height: 1.50,
+                    ),
                   ),
                 ],
               ),
@@ -242,9 +308,15 @@ class _ImageAnalysisScreenState extends State<ImageAnalysisScreen> {
                   borderRadius: BorderRadius.circular(12),
                 ),
               ),
-              child: const Text(
+              child: Text(
                 'Choose Different Image',
-                style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                textAlign: TextAlign.center,
+                style: GoogleFonts.inter(
+                  color: const Color(0xFF354152),
+                  fontSize: 16,
+                  fontWeight: FontWeight.w400,
+                  height: 1.50,
+                ),
               ),
             ),
           ),
@@ -266,12 +338,18 @@ class _ImageAnalysisScreenState extends State<ImageAnalysisScreen> {
               ),
               child: Row(
                 mainAxisAlignment: MainAxisAlignment.center,
-                children: const [
-                  Icon(Icons.auto_awesome, size: 20),
-                  SizedBox(width: 8),
+                children: [
+                  Image.asset(Assets.icons.anlayxe.path, width: 20, height: 20),
+                  const SizedBox(width: 8),
                   Text(
                     'Analyze Image (\$1.00)',
-                    style: TextStyle(fontSize: 16, fontWeight: FontWeight.w600),
+                    textAlign: TextAlign.center,
+                    style: GoogleFonts.inter(
+                      color: Colors.white,
+                      fontSize: 16,
+                      fontWeight: FontWeight.w400,
+                      height: 1.50,
+                    ),
                   ),
                 ],
               ),
