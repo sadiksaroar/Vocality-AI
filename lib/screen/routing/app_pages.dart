@@ -1,7 +1,9 @@
 import 'package:go_router/go_router.dart';
 import 'package:vocality_ai/screen/auth/forget_password_screen.dart';
 import 'package:vocality_ai/screen/auth/log_in_Screen.dart';
+import 'package:vocality_ai/screen/auth/otp_verify_screen.dart';
 import 'package:vocality_ai/screen/auth/password_chnage_screen.dart';
+import 'package:vocality_ai/screen/auth/resent_otp_screen.dart';
 import 'package:vocality_ai/screen/auth/sign_in_screen.dart';
 import 'package:vocality_ai/screen/home/drawer/profile_dashboard/profile_dashboard.dart';
 import 'package:vocality_ai/screen/home/drawer/purchase_screen/purchase_screen.dart';
@@ -39,6 +41,15 @@ class AppPages {
       ),
 
       GoRoute(
+        path: AppPath.otpVerifyScreen,
+        builder: (context, state) {
+          final email =
+              state.extra as String?; // Pass email from previous screen
+          return OtpVerifyScreen(email: email);
+        },
+      ),
+
+      GoRoute(
         path: AppPath.logInScreen,
         builder: (context, state) {
           // Replace with your LogInScreen widget
@@ -53,15 +64,13 @@ class AppPages {
           return const ForgotPasswordScreen();
         },
       ),
-
       GoRoute(
-        path: AppPath.otpVerifyScreen,
+        path: AppPath.resentOtpScreen,
         builder: (context, state) {
-          // Replace with your OTPVerifyScreen widget
-          return const LogInScreen();
+          // Replace with your ResentOtpScreen widget
+          return const ResentOtpScreen();
         },
       ),
-
       GoRoute(
         path: AppPath.passwordChangeScreen,
         builder: (context, state) {

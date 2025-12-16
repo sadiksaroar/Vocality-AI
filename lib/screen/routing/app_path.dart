@@ -9,6 +9,7 @@ class AppPath {
   static const String logInScreen = '/logInScreen';
   static const String forgetPasswordScreen = '/forgetPasswordScreen';
   static const String otpVerifyScreen = '/otpVerifyScreen';
+  static const String resentOtpScreen = '/resentOtpScreen';
   static const String passwordChangeScreen = '/passwordChangeScreen';
   /*  auth part end      */
 

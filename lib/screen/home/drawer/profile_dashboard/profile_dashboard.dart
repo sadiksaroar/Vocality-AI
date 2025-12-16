@@ -47,7 +47,7 @@ class ProfileDashboard extends StatelessWidget {
                     // User Info
                     Row(
                       children: [
-                        Container(
+                        SizedBox(
                           width: 64,
                           height: 64,
 

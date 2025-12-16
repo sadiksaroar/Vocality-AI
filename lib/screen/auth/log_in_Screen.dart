@@ -21,7 +21,6 @@ class _LogInScreenState extends State<LogInScreen> {
   final _passwordController = TextEditingController();
 
   bool _obscurePassword = true;
-  bool _obscureConfirmPassword = true;
 
   @override
   void dispose() {
@@ -142,21 +141,17 @@ class _LogInScreenState extends State<LogInScreen> {
                   SignInCustom(
                     text: 'Log in',
                     onPressed: () {
-                      // if (_formKey.currentState!.validate()) {
-                      //   ScaffoldMessenger.of(context).showSnackBar(
-                      //     const SnackBar(
-                      //       content: Text('Registration Successful!'),
-                      //     ),
-                      //   );
-                      // }
-                      context.push("/homeScreen");
+                      if (_formKey.currentState!.validate()) {
+                        // Form is valid, proceed to home screen
+                        context.push("/homeScreen");
+                      }
                     },
                     isSmallScreen: MediaQuery.of(context).size.width < 600,
                   ),
                   const SizedBox(height: 16),
 
                   // Continue Text
-                  Container(
+                  SizedBox(
                     width: double.infinity,
                     child: Row(
                       mainAxisSize: MainAxisSize.min,

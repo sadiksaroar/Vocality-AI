@@ -47,6 +47,9 @@ dependencies:
   fl_chart: ^1.1.1
   flutter_gen_runner: ^5.12.0
   image_picker: ^1.2.1
+  storage_helper_services: ^0.0.1
+  shared_preferences: ^2.5.4
+  http: ^1.6.0
 
 dev_dependencies:
   flutter_test:

@@ -24,29 +24,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
     super.dispose();
   }
 
-  void _handleContinue() {
-    final email = _emailController.text.trim();
-    if (email.isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          content: Text('Please enter your email'),
-          backgroundColor: Colors.red,
-        ),
-      );
-      return;
-    }
-
-    // Add your password reset logic here
-    print('Password reset requested for: $email');
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(
-        content: Text('Password reset link sent!'),
-        backgroundColor: Colors.green,
-      ),
-    );
-  }
-
   void _handleTryAnotherWay() {
     // Navigate to alternative recovery methods
     print('Try another way tapped');
@@ -88,11 +65,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                             color: Colors.white.withOpacity(0.3),
                             shape: BoxShape.circle,
                           ),
-                          // child: const Icon(
-                          //   Icons.arrow_back_ios_new,
-                          //   color: Colors.black87,
-                          //   size: 20,
-                          // ),
+
                           child: Image.asset(
                             Assets.icons.backIcon.path,
 
@@ -148,23 +121,6 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
 
                   SizedBox(height: isSmallScreen ? 16 : 20),
 
-                  // Try Another Way Button
-                  Center(
-                    child: TextButton(
-                      onPressed: _handleTryAnotherWay,
-                      style: TextButton.styleFrom(
-                        padding: const EdgeInsets.symmetric(
-                          horizontal: 16,
-                          vertical: 8,
-                        ),
-                      ),
-                      child: Text(
-                        'Try another way',
-                        style: MyTextStyles.subHeading,
-                      ),
-                    ),
-                  ),
-
                   SizedBox(height: isSmallScreen ? 20 : 24),
 
                   // Continue Button
@@ -172,14 +128,7 @@ class _ForgotPasswordScreenState extends State<ForgotPasswordScreen> {
                     text: 'Continue',
                     isSmallScreen: isSmallScreen,
                     onPressed: () {
-                      // if (_formKey.currentState!.validate()) {
-                      //   ScaffoldMessenger.of(context).showSnackBar(
-                      //     const SnackBar(
-                      //       content: Text('Password Changed Successfully!'),
-                      //     ),
-                      //   );
-                      // }
-                      context.push("/passwordChangeScreen");
+                      context.push("/resentOtpScreen");
                     },
                   ),
                 ],
