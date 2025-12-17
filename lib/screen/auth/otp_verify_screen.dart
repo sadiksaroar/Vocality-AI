@@ -512,7 +512,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:vocality_ai/core/gen/assets.gen.dart';
-import 'package:vocality_ai/screen/auth/auth_controller/otp_controller.dart';
+import 'package:vocality_ai/screen/auth/auth_controller/otp_verify_controller.dart';
 
 class OtpVerifyScreen extends StatelessWidget {
   final String? email;
@@ -617,7 +617,7 @@ class OtpVerifyScreen extends StatelessWidget {
                             onChanged: (value) =>
                                 controller.onOtpChanged(value, index),
                             onSubmitted: (value) {
-                              if (index == 5) {
+                              if (index == 5 && !controller.isLoading.value) {
                                 controller.verifyOtp(context);
                               }
                             },

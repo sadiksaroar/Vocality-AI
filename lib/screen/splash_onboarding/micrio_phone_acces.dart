@@ -3,10 +3,9 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vocality_ai/widget/color/apps_color.dart';
 import 'package:vocality_ai/widget/custom/custom_button.dart';
-import 'package:vocality_ai/widget/text/text.dart';
 
 class MicrophonePermissionScreen extends StatelessWidget {
-  const MicrophonePermissionScreen({Key? key}) : super(key: key);
+  const MicrophonePermissionScreen({super.key});
 
   @override
   Widget build(BuildContext context) {

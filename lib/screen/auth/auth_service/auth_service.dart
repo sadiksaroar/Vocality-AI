@@ -3,7 +3,7 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import 'package:vocality_ai/core/gen/stroge_helper/stroge_helper.dart';
-import 'package:vocality_ai/screen/auth/model/sign_in_screen.dart';
+import 'package:vocality_ai/screen/auth/auth_model/sign_in_screen.dart';
 
 class AuthService {
   static const String baseUrl = 'http://10.10.7.24:8000';

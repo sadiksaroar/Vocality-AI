@@ -2,9 +2,9 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vocality_ai/core/gen/stroge_helper/stroge_helper.dart';
-import 'package:vocality_ai/screen/auth/auth_service/otp_service.dart';
-import 'package:vocality_ai/screen/auth/model/otp_request_model.dart';
-import 'package:vocality_ai/screen/auth/model/resend_otp_request_model.dart';
+import 'package:vocality_ai/screen/auth/auth_service/otp_verify_screen_service.dart';
+import 'package:vocality_ai/screen/auth/auth_model/otp_request_model.dart';
+import 'package:vocality_ai/screen/auth/auth_model/resend_otp_request_model.dart';
 
 class OtpController extends GetxController {
   final AuthRepository _repository = AuthRepository();
@@ -19,6 +19,8 @@ class OtpController extends GetxController {
   final RxBool isResending = false.obs;
   final RxString email = ''.obs;
   final RxInt resendTimer = 0.obs;
+
+  DateTime? _lastVerifyAttempt;
 
   @override
   void onInit() {
@@ -89,6 +91,23 @@ class OtpController extends GetxController {
   }
 
   Future<void> verifyOtp(BuildContext context) async {
+    // Prevent multiple simultaneous calls
+    if (isLoading.value) {
+      debugPrint(
+        'OTP verification already in progress, ignoring duplicate call',
+      );
+      return;
+    }
+
+    // Debounce: prevent calls within 2 seconds of each other
+    final now = DateTime.now();
+    if (_lastVerifyAttempt != null &&
+        now.difference(_lastVerifyAttempt!).inSeconds < 2) {
+      debugPrint('OTP verification called too soon, ignoring (debounce)');
+      return;
+    }
+    _lastVerifyAttempt = now;
+
     final otp = getOtp();
 
     if (otp.length != 6) {
@@ -145,9 +164,20 @@ class OtpController extends GetxController {
           context.go("/logInScreen");
         }
       } else {
+        // Provide better context for specific error cases
+        String errorTitle = 'Error';
+        String errorMessage = response.message;
+
+        // Check if it's an "already activated" error
+        if (response.message.toLowerCase().contains('already activated')) {
+          errorTitle = 'Account Active';
+          errorMessage =
+              'Your account is already activated. Please try logging in instead.';
+        }
+
         _safeSnackbar(
-          'Error',
-          response.message,
+          errorTitle,
+          errorMessage,
           context: context,
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red,
@@ -194,12 +224,12 @@ class OtpController extends GetxController {
 
     try {
       final request = ResendOtpRequestModel(email: email.value);
-      final success = await _repository.resendOtp(request);
+      final result = await _repository.resendOtp(request);
 
-      if (success) {
+      if (result['success'] == true) {
         _safeSnackbar(
           'Success',
-          'OTP sent successfully to ${email.value}',
+          result['message'] ?? 'OTP sent successfully to ${email.value}',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.green,
           colorText: Colors.white,
@@ -210,7 +240,7 @@ class OtpController extends GetxController {
       } else {
         _safeSnackbar(
           'Error',
-          'Failed to resend OTP. Please try again.',
+          result['message'] ?? 'Failed to resend OTP. Please try again.',
           snackPosition: SnackPosition.BOTTOM,
           backgroundColor: Colors.red,
           colorText: Colors.white,

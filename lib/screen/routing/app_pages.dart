@@ -67,10 +67,12 @@ class AppPages {
       GoRoute(
         path: AppPath.resentOtpScreen,
         builder: (context, state) {
-          // Replace with your ResentOtpScreen widget
-          return const ResentOtpScreen();
+          final extra = state.extra as Map<String, dynamic>?;
+          final email = extra?['email'] as String? ?? '';
+          return ResentOtpScreen(email: email);
         },
       ),
+
       GoRoute(
         path: AppPath.passwordChangeScreen,
         builder: (context, state) {
@@ -78,6 +80,13 @@ class AppPages {
           return const PasswordChnageScreen();
         },
       ),
+      // GoRoute(
+      //   path: '/password-change/:token',
+      //   builder: (context, state) {
+      //     final token = state.pathParameters['token']!;
+      //     return PasswordChnageScreen(resetToken: token);
+      //   },
+      // ),
 
       /*  auth part end      */
       /*  home part start     */
