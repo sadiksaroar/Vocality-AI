@@ -139,6 +139,9 @@ class $AssetsIconsGen {
   AssetGenImage get subcriptionStatues =>
       const AssetGenImage('assets/icons/subcription_statues.png');
 
+  /// File path: assets/icons/trcord.png
+  AssetGenImage get trcord => const AssetGenImage('assets/icons/trcord.png');
+
   /// File path: assets/icons/what should nowlii call you_.png
   AssetGenImage get whatShouldNowliiCallYou =>
       const AssetGenImage('assets/icons/what should nowlii call you_.png');
@@ -180,6 +183,7 @@ class $AssetsIconsGen {
     min12,
     profile,
     subcriptionStatues,
+    trcord,
     whatShouldNowliiCallYou,
   ];
 }

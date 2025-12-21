@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:vocality_ai/core/gen/assets.gen.dart';
 import 'package:vocality_ai/screen/home/drawer/drawer_screen.dart';
 import 'package:vocality_ai/screen/routing/app_path.dart';
 
@@ -45,20 +47,72 @@ class _HomeScreenState extends State<HomeScreen> {
         child: Column(
           children: [
             // Menu Button with Builder to access correct context
-            Padding(
-              padding: const EdgeInsets.all(16.0),
-              child: Align(
-                alignment: Alignment.topLeft,
-                child: Builder(
-                  builder: (context) => IconButton(
-                    icon: const Icon(Icons.menu),
-                    onPressed: () {
-                      Scaffold.of(context).openDrawer();
-                    },
-                    color: selectedIndex >= 2 ? Colors.white : Colors.black,
+            Row(
+              children: [
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Align(
+                    alignment: Alignment.topLeft,
+                    child: Builder(
+                      builder: (context) => IconButton(
+                        icon: const Icon(Icons.menu),
+                        onPressed: () {
+                          Scaffold.of(context).openDrawer();
+                        },
+                        color: selectedIndex >= 2 ? Colors.white : Colors.black,
+                      ),
+                    ),
                   ),
                 ),
-              ),
+
+                const Spacer(),
+                // ...existing code...
+                Padding(
+                  padding: const EdgeInsets.all(10.0),
+                  child: Container(
+                    height: 35,
+                    width: 140,
+                    padding: const EdgeInsets.symmetric(
+                      horizontal: 12,
+                      vertical: 10,
+                    ),
+                    decoration: BoxDecoration(
+                      color: const Color(0xFFF1F1F1),
+                      borderRadius: BorderRadius.circular(50),
+                      boxShadow: [
+                        BoxShadow(
+                          color: Colors.black.withOpacity(0.1),
+                          blurRadius: 10,
+                          offset: const Offset(0, 4),
+                        ),
+                      ],
+                    ),
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      children: [
+                        Container(
+                          width: 15,
+                          height: 15,
+                          child: Image.asset(
+                            Assets.icons.trcord.path,
+                            fit: BoxFit.contain,
+                          ),
+                        ),
+                        const SizedBox(width: 2),
+                        Text(
+                          'Start Recording',
+                          style: GoogleFonts.inter(
+                            fontSize: 12,
+                            fontWeight: FontWeight.w400,
+                            color: Colors.black,
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                ),
+                // ...existing code...
+              ],
             ),
             const Spacer(),
             // Microphone Button
@@ -82,25 +136,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  // children: [
-                  //   Icon(
-                  //     Icons.mic,
-                  //     size: 48,
-                  //     color: isListening ? Colors.red : Colors.grey[600],
-                  //   ),
-                  //   const SizedBox(height: 8),
-                  //   Text(
-                  //     isListening ? 'Listening...' : 'Tap to start',
-                  //     style: TextStyle(
-                  //       fontSize: 14,
-                  //       color: Colors.grey[700],
-                  //       fontWeight: FontWeight.w500,
-                  //     ),
-                  //   ),
-                  // ],
-                ),
+                child: Column(mainAxisAlignment: MainAxisAlignment.center),
               ),
             ),
             const Spacer(),
