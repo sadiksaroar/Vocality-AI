@@ -84,22 +84,22 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
                 child: Column(
                   mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
-                    Icon(
-                      Icons.mic,
-                      size: 48,
-                      color: isListening ? Colors.red : Colors.grey[600],
-                    ),
-                    const SizedBox(height: 8),
-                    Text(
-                      isListening ? 'Listening...' : 'Tap to start',
-                      style: TextStyle(
-                        fontSize: 14,
-                        color: Colors.grey[700],
-                        fontWeight: FontWeight.w500,
-                      ),
-                    ),
-                  ],
+                  // children: [
+                  //   Icon(
+                  //     Icons.mic,
+                  //     size: 48,
+                  //     color: isListening ? Colors.red : Colors.grey[600],
+                  //   ),
+                  //   const SizedBox(height: 8),
+                  //   Text(
+                  //     isListening ? 'Listening...' : 'Tap to start',
+                  //     style: TextStyle(
+                  //       fontSize: 14,
+                  //       color: Colors.grey[700],
+                  //       fontWeight: FontWeight.w500,
+                  //     ),
+                  //   ),
+                  // ],
                 ),
               ),
             ),
@@ -154,7 +154,7 @@ class _HomeScreenState extends State<HomeScreen> {
                             maxLines: 2,
                             overflow: TextOverflow.ellipsis,
                             style: TextStyle(
-                              fontSize: 12,
+                              fontSize: 10,
                               fontWeight: FontWeight.w600,
                               color: isSelected && index >= 1
                                   ? Colors.white
