@@ -1,4 +1,7 @@
+import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:provider/provider.dart';
+import 'package:vocality_ai/screen/auth/auth_controller/login_controller.dart';
 import 'package:vocality_ai/screen/auth/forget_password_screen.dart';
 import 'package:vocality_ai/screen/auth/log_in_Screen.dart';
 import 'package:vocality_ai/screen/auth/otp_verify_screen.dart';
@@ -52,8 +55,10 @@ class AppPages {
       GoRoute(
         path: AppPath.logInScreen,
         builder: (context, state) {
-          // Replace with your LogInScreen widget
-          return const LogInScreen();
+          return ChangeNotifierProvider(
+            create: (_) => LoginController(),
+            child: const LogInScreen(),
+          );
         },
       ),
 

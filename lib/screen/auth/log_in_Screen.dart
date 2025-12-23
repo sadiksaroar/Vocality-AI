@@ -1,7 +1,8 @@
-import 'package:flutter/material.dart';
+/*import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vocality_ai/core/gen/assets.gen.dart';
+import 'package:vocality_ai/screen/auth/auth_controller/login_controller.dart';
 import 'package:vocality_ai/widget/color/apps_color.dart';
 import 'package:vocality_ai/widget/custom/custom_text_field.dart';
 import 'package:vocality_ai/widget/custom/sign_in_custom.dart';
@@ -246,6 +247,335 @@ class _LogInScreenState extends State<LogInScreen> {
                             fontSize: 12,
                             fontWeight: FontWeight.w600,
                             // height: 1.70,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 20),
+                ],
+              ),
+            ),
+          ),
+        ),
+      ),
+    );
+  }
+
+  Widget _socialBtn({required Widget icon, required String text}) {
+    return Container(
+      height: 50,
+      width: double.infinity,
+      margin: const EdgeInsets.symmetric(vertical: 8),
+      decoration: BoxDecoration(borderRadius: BorderRadius.circular(30)),
+      child: OutlinedButton.icon(
+        onPressed: () {},
+        icon: icon,
+        label: Text(text, style: MyTextStyles.input),
+        style: OutlinedButton.styleFrom(
+          padding: const EdgeInsets.symmetric(vertical: 12, horizontal: 16),
+          side: const BorderSide(color: Color(0xFF5C5C5C)),
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(30),
+          ),
+        ),
+      ),
+    );
+  }
+}
+*/
+
+import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
+import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:vocality_ai/core/gen/assets.gen.dart';
+import 'package:vocality_ai/screen/auth/auth_controller/login_controller.dart';
+import 'package:vocality_ai/widget/color/apps_color.dart';
+import 'package:vocality_ai/widget/custom/custom_text_field.dart';
+import 'package:vocality_ai/widget/custom/sign_in_custom.dart';
+import 'package:vocality_ai/widget/text/text.dart';
+
+class LogInScreen extends StatefulWidget {
+  const LogInScreen({Key? key}) : super(key: key);
+
+  @override
+  State<LogInScreen> createState() => _LogInScreenState();
+}
+
+class _LogInScreenState extends State<LogInScreen> {
+  final _formKey = GlobalKey<FormState>();
+  final _emailController = TextEditingController();
+  final _passwordController = TextEditingController();
+  bool _obscurePassword = true;
+
+  @override
+  void dispose() {
+    _emailController.dispose();
+    _passwordController.dispose();
+    super.dispose();
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    final size = MediaQuery.of(context).size;
+    final isSmallScreen = size.width < 600;
+
+    return Scaffold(
+      backgroundColor: AppColors.yellowAmber,
+      body: SafeArea(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: EdgeInsets.symmetric(
+              horizontal: isSmallScreen ? 24.0 : 40.0,
+              vertical: 20.0,
+            ),
+            child: Form(
+              key: _formKey,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: [
+                  const SizedBox(height: 20),
+                  Assets.icons.k.image(width: 108, height: 126),
+                  const SizedBox(height: 16),
+                  Text(
+                    'Welcome back! Login to your account',
+                    style: MyTextStyles.subHeading,
+                    textAlign: TextAlign.center,
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Error Message Display
+                  Consumer<LoginController>(
+                    builder: (context, controller, _) {
+                      if (controller.errorMessage != null) {
+                        return Container(
+                          padding: const EdgeInsets.all(12),
+                          decoration: BoxDecoration(
+                            color: Colors.red.shade100,
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Row(
+                            children: [
+                              const Icon(Icons.error, color: Colors.red),
+                              const SizedBox(width: 8),
+                              Expanded(
+                                child: Text(
+                                  controller.errorMessage!,
+                                  style: const TextStyle(color: Colors.red),
+                                ),
+                              ),
+                              IconButton(
+                                icon: const Icon(
+                                  Icons.close,
+                                  color: Colors.red,
+                                ),
+                                onPressed: () => controller.clearError(),
+                              ),
+                            ],
+                          ),
+                        );
+                      }
+                      return const SizedBox.shrink();
+                    },
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Email Field
+                  CustomTextField(
+                    controller: _emailController,
+                    labelText: 'Email Address',
+                    hintText: 'abcdef@gmail.com',
+                    labelStyle: MyTextStyles.labelText,
+                    hintStyle: MyTextStyles.userName,
+                    keyboardType: TextInputType.emailAddress,
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your email';
+                      }
+                      if (!RegExp(
+                        r'^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$',
+                      ).hasMatch(value)) {
+                        return 'Please enter a valid email';
+                      }
+                      return null;
+                    },
+                  ),
+                  const SizedBox(height: 20),
+
+                  // Password Field
+                  CustomTextField(
+                    controller: _passwordController,
+                    labelText: 'Password',
+                    hintText: 'Enter your password',
+                    labelStyle: MyTextStyles.labelText,
+                    hintStyle: MyTextStyles.userName,
+                    obscureText: _obscurePassword,
+                    suffixIcon: IconButton(
+                      icon: Icon(
+                        _obscurePassword
+                            ? Icons.visibility_off
+                            : Icons.visibility,
+                        color: Colors.grey,
+                      ),
+                      onPressed: () {
+                        setState(() {
+                          _obscurePassword = !_obscurePassword;
+                        });
+                      },
+                    ),
+                    validator: (value) {
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter your password';
+                      }
+                      if (value.length < 6) {
+                        return 'Password must be at least 6 characters';
+                      }
+                      return null;
+                    },
+                  ),
+
+                  Column(
+                    children: [
+                      const SizedBox(height: 12),
+                      Align(
+                        alignment: Alignment.centerRight,
+                        child: GestureDetector(
+                          onTap: () {
+                            context.push("/forgetPasswordScreen");
+                          },
+                          child: Text(
+                            'Forgot Password?',
+                            style: MyTextStyles.subHeading,
+                          ),
+                        ),
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 32),
+
+                  // Login Button with Loading State
+                  Consumer<LoginController>(
+                    builder: (context, controller, _) {
+                      return SignInCustom(
+                        text: controller.isLoading ? 'Logging in...' : 'Log in',
+                        onPressed: controller.isLoading
+                            ? () {} // Provide an empty function when loading
+                            : () {
+                                if (_formKey.currentState!.validate()) {
+                                  controller
+                                      .login(
+                                        _emailController.text.trim(),
+                                        _passwordController.text.trim(),
+                                      )
+                                      .then((success) {
+                                        if (success && mounted) {
+                                          context.pushReplacement(
+                                            "/homeScreen",
+                                          );
+                                        }
+                                      });
+                                }
+                              },
+                        isSmallScreen: isSmallScreen,
+                      );
+                    },
+                  ),
+                  const SizedBox(height: 16),
+
+                  // Divider
+                  SizedBox(
+                    width: double.infinity,
+                    child: Row(
+                      mainAxisSize: MainAxisSize.min,
+                      mainAxisAlignment: MainAxisAlignment.start,
+                      crossAxisAlignment: CrossAxisAlignment.center,
+                      spacing: 10,
+                      children: [
+                        Expanded(
+                          child: Container(
+                            decoration: ShapeDecoration(
+                              shape: RoundedRectangleBorder(
+                                side: const BorderSide(
+                                  width: 1,
+                                  strokeAlign: BorderSide.strokeAlignCenter,
+                                  color: Color(0xFF999999),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                        Text(
+                          'or',
+                          textAlign: TextAlign.center,
+                          style: GoogleFonts.notoSans(
+                            color: const Color(0xFF3D3D3D),
+                            fontSize: 14,
+                            fontWeight: FontWeight.w500,
+                            height: 1.70,
+                          ),
+                        ),
+                        Expanded(
+                          child: Container(
+                            decoration: ShapeDecoration(
+                              shape: RoundedRectangleBorder(
+                                side: const BorderSide(
+                                  width: 1,
+                                  color: Color(0xFF999999),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),
+                      ],
+                    ),
+                  ),
+                  const SizedBox(height: 16),
+
+                  Column(
+                    children: [
+                      _socialBtn(
+                        icon: Image.asset(
+                          Assets.icons.apple.path,
+                          height: 24,
+                          width: 24,
+                        ),
+                        text: "Login with Apple",
+                      ),
+                      const SizedBox(height: 10),
+                      _socialBtn(
+                        icon: Image.asset(
+                          Assets.icons.google.path,
+                          height: 24,
+                          width: 24,
+                        ),
+                        text: "Login with Google",
+                      ),
+                    ],
+                  ),
+
+                  const SizedBox(height: 24),
+
+                  // Sign Up Link
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text(
+                        'Don\'t have an account? ',
+                        style: MyTextStyles.subHeading,
+                      ),
+                      GestureDetector(
+                        onTap: () {
+                          context.push("/signInScreen");
+                        },
+                        child: Text(
+                          'Create an Account',
+                          style: GoogleFonts.poppins(
+                            color: Colors.white,
+                            fontSize: 12,
+                            fontWeight: FontWeight.w600,
                           ),
                         ),
                       ),

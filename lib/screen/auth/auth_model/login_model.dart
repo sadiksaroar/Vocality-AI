@@ -1,5 +1,3 @@
-// models/login_model.dart
-
 class LoginRequest {
   final String email;
   final String password;
@@ -12,49 +10,38 @@ class LoginRequest {
 }
 
 class LoginResponse {
-  final String? token;
-  final String? refreshToken;
-  final User? user;
-  final String? message;
+  final String accessToken;
+  final String refreshToken;
+  final String email;
+  final String message;
 
-  LoginResponse({this.token, this.refreshToken, this.user, this.message});
+  LoginResponse({
+    required this.accessToken,
+    required this.refreshToken,
+    required this.email,
+    required this.message,
+  });
 
   factory LoginResponse.fromJson(Map<String, dynamic> json) {
     return LoginResponse(
-      token: json['token'] ?? json['access_token'] ?? json['access'],
-      refreshToken: json['refresh_token'] ?? json['refresh'],
-      user: json['user'] != null ? User.fromJson(json['user']) : null,
-      message: json['message'],
+      accessToken: json['access'] ?? '',
+      refreshToken: json['refresh'] ?? '',
+      email: json['email'] ?? '',
+      message: json['message'] ?? 'Login successful',
     );
   }
 }
 
-class User {
-  final int? id;
-  final String? email;
-  final String? name;
-  final String? firstName;
-  final String? lastName;
+class LoginError {
+  final String message;
+  final int statusCode;
 
-  User({this.id, this.email, this.name, this.firstName, this.lastName});
+  LoginError({required this.message, required this.statusCode});
 
-  factory User.fromJson(Map<String, dynamic> json) {
-    return User(
-      id: json['id'],
-      email: json['email'],
-      name: json['name'] ?? json['username'],
-      firstName: json['first_name'],
-      lastName: json['last_name'],
+  factory LoginError.fromJson(Map<String, dynamic> json) {
+    return LoginError(
+      message: json['detail'] ?? 'An error occurred',
+      statusCode: 0,
     );
-  }
-
-  Map<String, dynamic> toJson() {
-    return {
-      'id': id,
-      'email': email,
-      'name': name,
-      'first_name': firstName,
-      'last_name': lastName,
-    };
   }
 }

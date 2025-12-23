@@ -114,8 +114,17 @@ class _HomeScreenState extends State<HomeScreen> {
                 // ...existing code...
               ],
             ),
-            const Spacer(),
-            // Microphone Button
+
+            Text(
+              'K',
+              style: GoogleFonts.montserrat(
+                fontSize: 135,
+                fontWeight: FontWeight.w700,
+                color: selectedIndex >= 1 ? Colors.white : Colors.black,
+              ),
+            ),
+
+            // ...existing code...
             GestureDetector(
               onTap: () {
                 setState(() {
@@ -136,9 +145,47 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ],
                 ),
-                child: Column(mainAxisAlignment: MainAxisAlignment.center),
+                child: Stack(
+                  alignment: Alignment.center,
+                  children: [
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 600),
+                      curve: Curves.easeInOut,
+                      width: isListening ? 140 : 110,
+                      height: isListening ? 140 : 110,
+                      decoration: BoxDecoration(
+                        color: Colors.blue.withOpacity(0.12),
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    AnimatedContainer(
+                      duration: const Duration(milliseconds: 600),
+                      curve: Curves.easeInOut,
+                      width: isListening ? 120 : 90,
+                      height: isListening ? 120 : 90,
+                      decoration: BoxDecoration(
+                        color: Colors.blue.withOpacity(0.18),
+                        shape: BoxShape.circle,
+                      ),
+                    ),
+                    Container(
+                      width: 70,
+                      height: 70,
+                      decoration: const BoxDecoration(
+                        color: Colors.blue,
+                        shape: BoxShape.circle,
+                      ),
+                      child: const Icon(
+                        Icons.mic,
+                        color: Colors.white,
+                        size: 32,
+                      ),
+                    ),
+                  ],
+                ),
               ),
             ),
+            // ...existing code...
             const Spacer(),
             // Personality Buttons Box
             const SizedBox(height: 12),
