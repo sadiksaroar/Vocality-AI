@@ -22,6 +22,8 @@ class AuthController extends GetxController {
       isLoading.value = true;
       errorMessage.value = '';
 
+      print('🔄 Starting registration for email: $email');
+
       final response = await _authService.register(
         email: email,
         name: name,
@@ -32,6 +34,8 @@ class AuthController extends GetxController {
       if (response.success) {
         // Save email to storage for OTP verification
         await StorageHelper.saveEmail(email);
+
+        print('✅ Registration successful!');
 
         // Use ScaffoldMessenger instead of Get.snackbar
         if (context.mounted) {
@@ -46,12 +50,15 @@ class AuthController extends GetxController {
         return true;
       } else {
         errorMessage.value = response.message ?? 'Registration failed';
+
+        print('❌ Registration failed: ${errorMessage.value}');
+
         if (context.mounted) {
           ScaffoldMessenger.of(context).showSnackBar(
             SnackBar(
               content: Text(errorMessage.value),
               backgroundColor: Colors.red,
-              duration: const Duration(seconds: 3),
+              duration: const Duration(seconds: 4),
             ),
           );
         }
@@ -59,12 +66,15 @@ class AuthController extends GetxController {
       }
     } catch (e) {
       errorMessage.value = e.toString();
+
+      print('❌ Exception during registration: $e');
+
       if (context.mounted) {
         ScaffoldMessenger.of(context).showSnackBar(
           SnackBar(
             content: Text('Something went wrong: ${e.toString()}'),
             backgroundColor: Colors.red,
-            duration: const Duration(seconds: 3),
+            duration: const Duration(seconds: 4),
           ),
         );
       }

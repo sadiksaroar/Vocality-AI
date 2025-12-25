@@ -15,6 +15,21 @@ class AuthService {
     required String password2,
   }) async {
     try {
+      // Validate inputs
+      if (email.isEmpty || name.isEmpty || password.isEmpty) {
+        return RegisterResponse(
+          success: false,
+          message: 'Please fill all fields',
+        );
+      }
+
+      if (password != password2) {
+        return RegisterResponse(
+          success: false,
+          message: 'Passwords do not match',
+        );
+      }
+
       final request = RegisterRequest(
         email: email,
         name: name,
@@ -22,11 +37,23 @@ class AuthService {
         password2: password2,
       );
 
-      final response = await http.post(
-        Uri.parse('$baseUrl/accounts/user/register/'),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode(request.toJson()),
-      );
+      print('📤 Registration Request: ${request.toJson()}');
+      print('🔗 Endpoint: $baseUrl/accounts/user/register/');
+
+      final response = await http
+          .post(
+            Uri.parse('$baseUrl/accounts/user/register/'),
+            headers: {'Content-Type': 'application/json'},
+            body: json.encode(request.toJson()),
+          )
+          .timeout(
+            const Duration(seconds: 10),
+            onTimeout: () =>
+                throw 'Request timeout. Please check your connection.',
+          );
+
+      print('📥 Status Code: ${response.statusCode}');
+      print('📥 Response Body: ${response.body}');
 
       if (response.statusCode == 200 || response.statusCode == 201) {
         final data = json.decode(response.body);
@@ -39,16 +66,48 @@ class AuthService {
 
         return registerResponse;
       } else {
-        final error = json.decode(response.body);
-        return RegisterResponse(
-          success: false,
-          message: error['message'] ?? error['detail'] ?? 'Registration failed',
-        );
+        try {
+          final error = json.decode(response.body);
+
+          // Handle field-specific errors
+          String errorMessage = 'Registration failed';
+
+          if (error is Map) {
+            // Check for detail field (Django REST framework standard)
+            if (error.containsKey('detail')) {
+              errorMessage = error['detail'];
+            }
+            // Check for message field
+            else if (error.containsKey('message')) {
+              errorMessage = error['message'];
+            }
+            // Check for field errors (e.g., {"email": ["This field may not be blank."]})
+            else if (error.containsKey('email')) {
+              errorMessage = 'Email: ${error['email'].toString()}';
+            } else if (error.containsKey('password')) {
+              errorMessage = 'Password: ${error['password'].toString()}';
+            } else if (error.containsKey('name')) {
+              errorMessage = 'Name: ${error['name'].toString()}';
+            }
+            // Handle generic errors object
+            else {
+              errorMessage = error.entries.first.value.toString();
+            }
+          }
+
+          return RegisterResponse(success: false, message: errorMessage);
+        } catch (e) {
+          return RegisterResponse(
+            success: false,
+            message: 'Server error (${response.statusCode}): ${response.body}',
+          );
+        }
       }
     } catch (e) {
+      print('❌ Exception: $e');
       return RegisterResponse(
         success: false,
-        message: 'Network error: ${e.toString()}',
+        message: 'Error: ${e.toString()}',
       );
     }
   }

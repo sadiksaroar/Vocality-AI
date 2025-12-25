@@ -5,7 +5,8 @@ import 'package:vocality_ai/screen/auth/auth_model/otp_request_model.dart';
 import 'package:vocality_ai/screen/auth/auth_model/resend_otp_request_model.dart';
 
 class AuthRepository {
-  final String baseUrl = 'http://10.10.7.24:8000';
+  // Use consistent base URL across all auth services
+  static const String baseUrl = 'http://10.10.7.24:8000';
 
   Future<OtpResponseModel> verifyOtp(OtpRequestModel request) async {
     try {

@@ -47,7 +47,12 @@ class LoginController extends ChangeNotifier {
       notifyListeners();
       return true;
     } catch (e) {
-      _errorMessage = e.toString();
+      // Extract clean error message
+      String errorMsg = e.toString();
+      if (errorMsg.startsWith('Exception: ')) {
+        errorMsg = errorMsg.substring(11); // Remove 'Exception: ' prefix
+      }
+      _errorMessage = errorMsg;
       _isLoading = false;
       notifyListeners();
       return false;
