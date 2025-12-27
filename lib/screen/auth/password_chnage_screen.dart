@@ -219,6 +219,7 @@ class _PasswordChnageScreenState extends State<PasswordChnageScreen> {
 /*
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vocality_ai/core/gen/assets.gen.dart';
 import 'package:vocality_ai/screen/auth/auth_controller/change_password_controller.dart';
@@ -260,7 +261,7 @@ class PasswordChnageScreen extends StatelessWidget {
                     Row(
                       children: [
                         GestureDetector(
-                          onTap: () => Get.back(),
+                          onTap: () => context.pop(),
                           child: Container(
                             width: 40,
                             height: 40,
@@ -350,7 +351,7 @@ class PasswordChnageScreen extends StatelessWidget {
 
                     Center(
                       child: TextButton(
-                        onPressed: controller.tryAnotherWay,
+                        onPressed: () => controller.tryAnotherWay(context),
                         child: const Text(
                           'Try another way',
                           style: TextStyle(
@@ -375,7 +376,7 @@ class PasswordChnageScreen extends StatelessWidget {
                           : SignInCustom(
                               text: 'Continue',
                               isSmallScreen: isSmallScreen,
-                              onPressed: controller.changePassword,
+                              onPressed: () => controller.changePassword(context),
                             ),
                     ),
                   ],

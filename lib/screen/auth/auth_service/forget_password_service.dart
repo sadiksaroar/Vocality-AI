@@ -2,10 +2,11 @@
 
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:vocality_ai/core/base/base_url.dart';
 import 'package:vocality_ai/screen/auth/auth_model/forgot_password_request_model.dart';
 
 class ForgotPasswordService {
-  static const String baseUrl = 'http://10.10.7.24:8000';
+  static const String baseUrl = AppConfig.httpBase;
   // Using send-reset-password-email endpoint for password reset
   // The resend-otp endpoint is for account activation only
   static const String resendOtpEndpoint =

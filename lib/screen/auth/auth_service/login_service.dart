@@ -1,4 +1,5 @@
 import 'package:http/http.dart' as http;
+import 'package:vocality_ai/core/base/base_url.dart';
 import 'package:vocality_ai/screen/auth/auth_model/login_model.dart';
 import 'dart:convert';
 import 'dart:io';
@@ -9,7 +10,7 @@ class ApiService {
   // Allow overriding via --dart-define=API_BASE_URL and --dart-define=LOGIN_ENDPOINT
   static const String baseUrl = String.fromEnvironment(
     'API_BASE_URL',
-    defaultValue: 'http://10.10.7.24:8000',
+    defaultValue: AppConfig.httpBase,
   );
   static const String loginEndpoint = String.fromEnvironment(
     'LOGIN_ENDPOINT',

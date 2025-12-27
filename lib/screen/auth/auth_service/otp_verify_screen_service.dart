@@ -1,12 +1,14 @@
 import 'dart:convert';
 
 import 'package:http/http.dart' as http;
+import 'package:vocality_ai/core/config/app_config.dart';
 import 'package:vocality_ai/screen/auth/auth_model/otp_request_model.dart';
 import 'package:vocality_ai/screen/auth/auth_model/resend_otp_request_model.dart';
+import 'package:vocality_ai/screen/home/drawer/setting_screen.dart/settings_chnage_password/chage_password_model/chage_password_model.dart';
 
 class AuthRepository {
   // Use consistent base URL across all auth services
-  static const String baseUrl = 'http://10.10.7.24:8000';
+  static const String baseUrl = AppConfig.httpBase;
 
   Future<OtpResponseModel> verifyOtp(OtpRequestModel request) async {
     try {
@@ -135,6 +137,85 @@ class AuthRepository {
         'success': false,
         'message': 'Network error. Please check your connection.',
       };
+    }
+  }
+
+  Future<ChangePasswordResponse> changePassword({
+    required String currentPassword,
+    required String newPassword,
+    required String confirmNewPassword,
+    required String token,
+  }) async {
+    try {
+      final request = ChangePasswordRequest(
+        currentPassword: currentPassword,
+        newPassword: newPassword,
+        confirmNewPassword: confirmNewPassword,
+      );
+
+      print(
+        'Change Password Request URL: $baseUrl/accounts/user/change-password/',
+      );
+      print('Change Password Request Body: ${json.encode(request.toJson())}');
+
+      final response = await http.post(
+        Uri.parse('$baseUrl/accounts/user/change-password/'),
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': 'Bearer $token',
+        },
+        body: json.encode(request.toJson()),
+      );
+
+      print('Change Password Response Status: ${response.statusCode}');
+      print('Change Password Response Body: ${response.body}');
+
+      if (response.statusCode == 200 || response.statusCode == 201) {
+        final data = json.decode(response.body);
+        return ChangePasswordResponse(
+          success: true,
+          message: data['message'] ?? 'Password changed successfully',
+        );
+      } else {
+        final data = json.decode(response.body);
+        String errorMessage = 'Failed to change password';
+
+        if (data is Map<String, dynamic>) {
+          if (data['errors'] != null &&
+              data['errors'] is Map<String, dynamic>) {
+            final errors = data['errors'] as Map<String, dynamic>;
+            if (errors['non_field_errors'] != null) {
+              errorMessage = errors['non_field_errors'] is List
+                  ? (errors['non_field_errors'] as List).join(', ')
+                  : errors['non_field_errors'].toString();
+            } else if (errors['current_password'] != null) {
+              errorMessage = errors['current_password'] is List
+                  ? (errors['current_password'] as List).join(', ')
+                  : errors['current_password'].toString();
+            } else if (errors['new_password'] != null) {
+              errorMessage = errors['new_password'] is List
+                  ? (errors['new_password'] as List).join(', ')
+                  : errors['new_password'].toString();
+            } else {
+              errorMessage = errors.values.first.toString();
+            }
+          } else {
+            errorMessage =
+                data['message'] ??
+                data['error'] ??
+                data['detail'] ??
+                'Failed to change password';
+          }
+        }
+
+        return ChangePasswordResponse(success: false, message: errorMessage);
+      }
+    } catch (e) {
+      print('Change Password Error: $e');
+      return ChangePasswordResponse(
+        success: false,
+        message: 'Network error. Please check your connection and try again.',
+      );
     }
   }
 }

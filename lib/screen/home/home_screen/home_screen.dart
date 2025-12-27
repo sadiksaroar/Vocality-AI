@@ -295,7 +295,7 @@ import 'package:vocality_ai/screen/routing/app_path.dart';
 
 import 'package:vocality_ai/core/config/app_config.dart';
 import 'package:vocality_ai/core/network/api_service.dart';
-import 'package:vocality_ai/core/audio/audio_service.dart';
+import 'package:vocality_ai/screen/home/home_screen/audio/audio_service.dart';
 import 'package:vocality_ai/core/voice/speech_service.dart';
 import 'package:vocality_ai/core/voice/recorder_service.dart';
 
@@ -340,53 +340,113 @@ class _HomeScreenState extends State<HomeScreen> {
 
   bool isRecording = false;
   bool isPremiumUser = false; // TODO: set true if user has premium
+  bool _isConversationActive = false;
 
   int get _personalityId => selectedIndex + 1; // A=1, B=2, C=3, D=4
 
   @override
   void dispose() {
+    _isConversationActive = false;
     audio.stop();
+    speech.stop();
     super.dispose();
   }
 
   Future<void> _onMicTap() async {
     if (!isListening) {
+      // Start continuous conversation mode
+      _isConversationActive = true;
+      setState(() => isListening = true);
+      await _startContinuousConversation();
+    } else {
+      // Stop conversation mode
+      _isConversationActive = false;
+      setState(() => isListening = false);
+      await speech.stop();
+      await audio.stop();
+
+      // End active conversation on server
+      try {
+        await api.endActiveConversation(personalityId: _personalityId);
+      } catch (e) {
+        print('❌ Failed to end conversation: $e');
+      }
+    }
+  }
+
+  Future<void> _startContinuousConversation() async {
+    while (_isConversationActive && mounted) {
+      // Start listening
       final ok = await speech.start((t) {
         setState(() {});
       });
+
       if (!ok) {
-        ScaffoldMessenger.of(
-          context,
-        ).showSnackBar(const SnackBar(content: Text('Speech not available')));
+        if (mounted) {
+          ScaffoldMessenger.of(
+            context,
+          ).showSnackBar(const SnackBar(content: Text('Speech not available')));
+        }
+        _isConversationActive = false;
+        setState(() => isListening = false);
         return;
       }
-      setState(() => isListening = true);
-    } else {
+
+      // Wait for speech to complete (with timeout)
+      await Future.delayed(
+        const Duration(seconds: 5),
+      ); // Adjust timeout as needed
+
+      if (!_isConversationActive) break;
+
+      // Get the transcribed text
       final text = await speech.stop();
-      setState(() => isListening = false);
+
+      if (!_isConversationActive) break;
+
+      // If we got some text, send it and play response
       if (text.isNotEmpty) {
         try {
           final data = await api.sendMessage(
             personalityId: _personalityId,
             message: text,
           );
+
+          if (!_isConversationActive) break;
+
           final audioUrl = data['audio_url'] as String?;
           print('🎵 Received audio_url from API: $audioUrl');
+
           if (audioUrl != null && audioUrl.isNotEmpty) {
             final resolvedUrl = AppConfig.resolveAudioUrl(audioUrl);
             print('🎵 Resolved audio URL: $resolvedUrl');
             await audio.playUrl(resolvedUrl);
+
+            // Wait for audio to finish playing before listening again
+            await Future.delayed(const Duration(seconds: 2)); // Add buffer time
           } else {
-            ScaffoldMessenger.of(
-              context,
-            ).showSnackBar(const SnackBar(content: Text('No audio_url')));
+            if (mounted) {
+              ScaffoldMessenger.of(
+                context,
+              ).showSnackBar(const SnackBar(content: Text('No audio_url')));
+            }
           }
         } catch (e) {
-          ScaffoldMessenger.of(
-            context,
-          ).showSnackBar(SnackBar(content: Text('Error: $e')));
+          if (mounted) {
+            ScaffoldMessenger.of(
+              context,
+            ).showSnackBar(SnackBar(content: Text('Error: $e')));
+          }
         }
       }
+
+      // Small delay before next listening cycle
+      await Future.delayed(const Duration(milliseconds: 500));
+    }
+
+    // Ensure state is updated when loop exits
+    if (mounted) {
+      setState(() => isListening = false);
     }
   }
 
@@ -582,15 +642,24 @@ class _HomeScreenState extends State<HomeScreen> {
                     final isSelected = selectedIndex == index;
                     final isPremiumTab = index >= 1; // B/C/D premium
                     return GestureDetector(
-                      onTap: () {
+                      onTap: () async {
                         if (isPremiumTab && !isPremiumUser) {
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(
-                              content: Text('Premium required for B/C/D'),
-                            ),
-                          );
+                          // Redirect to purchase screen for premium personalities
+                          context.push(AppPath.purchaseScreen);
                           return;
                         }
+
+                        // If switching personality, end current conversation
+                        if (selectedIndex != index) {
+                          try {
+                            await api.endActiveConversation(
+                              personalityId: _personalityId,
+                            );
+                          } catch (e) {
+                            print('❌ Failed to end conversation: $e');
+                          }
+                        }
+
                         setState(() {
                           selectedIndex = index;
                           selectedPersonality = tabs[index].replaceAll(

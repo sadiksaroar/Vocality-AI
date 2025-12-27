@@ -264,7 +264,7 @@ class OtpVerifyScreen extends StatelessWidget {
               Row(
                 children: [
                   GestureDetector(
-                    onTap: () => Get.back(),
+                    onTap: () => context.pop(),
                     child: Container(
                       width: 40,
                       height: 40,

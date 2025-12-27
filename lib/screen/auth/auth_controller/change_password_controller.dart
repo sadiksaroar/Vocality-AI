@@ -2,6 +2,7 @@ import 'dart:convert';
 import 'package:get/get.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter/material.dart';
+import 'package:vocality_ai/core/config/app_config.dart';
 
 class PasswordChangeController extends GetxController {
   // Text Controllers
@@ -17,7 +18,8 @@ class PasswordChangeController extends GetxController {
   final formKey = GlobalKey<FormState>();
 
   // API Base URL - UPDATE THIS TO YOUR ACTUAL IP
-  static const String baseUrl = 'http://10.10.7.24:8000';
+  // static const String baseUrl = 'http://10.10.7.24:8000';
+  static const String baseUrl = AppConfig.httpBase;
 
   // Reset token (should be passed from previous screen)
   String? resetToken;
@@ -72,29 +74,36 @@ class PasswordChangeController extends GetxController {
   }
 
   // Show error dialog instead of snackbar to avoid context issues
-  void _showErrorDialog(String title, String message) {
-    Get.dialog(
-      AlertDialog(
+  void _showErrorDialog(BuildContext context, String title, String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
         title: Text(title),
         content: Text(message),
         actions: [
-          TextButton(onPressed: () => Get.back(), child: const Text('OK')),
+          TextButton(
+            onPressed: () => Navigator.of(ctx).pop(),
+            child: const Text('OK'),
+          ),
         ],
       ),
     );
   }
 
   // Show success dialog
-  void _showSuccessDialog(String message) {
-    Get.dialog(
-      AlertDialog(
+  void _showSuccessDialog(BuildContext context, String message) {
+    showDialog(
+      context: context,
+      builder: (ctx) => AlertDialog(
         title: const Text('Success'),
         content: Text(message),
         actions: [
           TextButton(
             onPressed: () {
-              Get.back(); // Close dialog
-              Get.back(); // Go back to previous screen
+              Navigator.of(ctx).pop(); // Close dialog
+              if (context.mounted) {
+                Navigator.of(context).pop(); // Go back to previous screen
+              }
             },
             child: const Text('OK'),
           ),
@@ -104,7 +113,7 @@ class PasswordChangeController extends GetxController {
   }
 
   // API call to change password
-  Future<void> changePassword() async {
+  Future<void> changePassword(BuildContext context) async {
     if (!formKey.currentState!.validate()) {
       return;
     }
@@ -113,6 +122,7 @@ class PasswordChangeController extends GetxController {
     if (resetToken == null || resetToken!.isEmpty) {
       print('Error: Reset token is null or empty');
       _showErrorDialog(
+        context,
         'Error',
         'Reset token not found. Please try the password reset process again.',
       );
@@ -149,7 +159,10 @@ class PasswordChangeController extends GetxController {
       if (response.statusCode == 200) {
         var data = json.decode(responseBody);
 
-        _showSuccessDialog(data['msg'] ?? 'Password changed successfully');
+        _showSuccessDialog(
+          context,
+          data['msg'] ?? 'Password changed successfully',
+        );
       } else if (response.statusCode == 400) {
         var data = json.decode(responseBody);
 
@@ -166,9 +179,10 @@ class PasswordChangeController extends GetxController {
           }
         }
 
-        _showErrorDialog('Error', errorMessage);
+        _showErrorDialog(context, 'Error', errorMessage);
       } else {
         _showErrorDialog(
+          context,
           'Error',
           'Something went wrong. Status: ${response.statusCode}',
         );
@@ -176,6 +190,7 @@ class PasswordChangeController extends GetxController {
     } catch (e) {
       print('Change Password Error: $e');
       _showErrorDialog(
+        context,
         'Network Error',
         'Failed to connect to server: ${e.toString()}',
       );
@@ -185,8 +200,10 @@ class PasswordChangeController extends GetxController {
   }
 
   // Try another way - navigate back to forgot password
-  void tryAnotherWay() {
-    Get.back(); // Go back to previous screen
+  void tryAnotherWay(BuildContext context) {
+    if (context.mounted) {
+      Navigator.of(context).pop(); // Go back to previous screen
+    }
   }
 }
 

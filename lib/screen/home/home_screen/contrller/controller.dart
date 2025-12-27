@@ -1,6 +1,6 @@
 import 'package:get/get.dart';
 import 'package:record/record.dart';
-import 'package:vocality_ai/services/voice_chat_service.dart';
+import 'package:vocality_ai/screen/home/image_analysis_screen/services/voice_chat_service.dart';
 import 'package:vocality_ai/models/voice_chat_models.dart';
 import 'dart:typed_data';
 

@@ -26,4 +26,24 @@ class ApiService {
       throw Exception('HTTP ${resp.statusCode}: ${resp.reasonPhrase}');
     }
   }
+
+  Future<void> endActiveConversation({required int personalityId}) async {
+    final token = await StorageHelper.getToken();
+    final headers = {
+      'Content-Type': 'application/json',
+      if (token != null && token.isNotEmpty) 'Authorization': 'Bearer $token',
+    };
+
+    final resp = await http.post(
+      Uri.parse(AppConfig.endActiveUrl),
+      headers: headers,
+      body: json.encode({'personality_id': personalityId}),
+    );
+
+    if (resp.statusCode == 200) {
+      print('✅ Conversation ended: ${await resp.body}');
+    } else {
+      throw Exception('HTTP ${resp.statusCode}: ${resp.reasonPhrase}');
+    }
+  }
 }

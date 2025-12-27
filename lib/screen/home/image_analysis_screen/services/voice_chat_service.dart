@@ -1,8 +1,8 @@
 import 'dart:async';
 import 'dart:typed_data';
+import 'package:vocality_ai/models/voice_chat_models.dart';
 import 'package:web_socket_channel/web_socket_channel.dart';
 import 'dart:convert';
-import 'package:vocality_ai/models/voice_chat_models.dart';
 
 class VoiceChatService {
   late WebSocketChannel _channel;
@@ -161,4 +161,12 @@ class VoiceChatService {
     _responseController.close();
     _sessionController.close();
   }
+}
+
+// Voice Session Event Model
+class VoiceSessionEvent {
+  final String type;
+  final VoiceSession? session;
+
+  VoiceSessionEvent({required this.type, this.session});
 }

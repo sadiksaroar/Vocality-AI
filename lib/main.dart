@@ -38,6 +38,10 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:google_fonts/google_fonts.dart';
+import 'package:provider/provider.dart';
+import 'package:get/get.dart';
+import 'package:vocality_ai/screen/home/drawer/profile_dashboard/profile_controller/profile_controller.dart';
+import 'package:vocality_ai/screen/home/drawer/setting_screen.dart/settings_chnage_password/contrlloer/contrlloer.dart';
 import 'package:vocality_ai/screen/routing/app_pages.dart';
 
 // void main() {
@@ -57,23 +61,31 @@ class MyApp extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ScreenUtilInit(
-      minTextAdapt: true,
-      splitScreenMode: true,
-      designSize: const Size(375, 812),
-      builder: (context, child) {
-        var themeData = ThemeData(
-          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-          textTheme: GoogleFonts.poppinsTextTheme(),
-        );
-        return MaterialApp.router(
-          debugShowCheckedModeBanner: false,
-          title: 'Flutter Demo',
-          theme: themeData,
-
-          routerConfig: AppPages.router,
-        );
-      },
+    return MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ProfileController()),
+        ChangeNotifierProvider(create: (_) => AuthProvider()),
+      ],
+      child: ScreenUtilInit(
+        minTextAdapt: true,
+        splitScreenMode: true,
+        designSize: const Size(375, 812),
+        builder: (context, child) {
+          var themeData = ThemeData(
+            colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+            textTheme: GoogleFonts.poppinsTextTheme(),
+          );
+          final _goRouter = AppPages.router;
+          return GetMaterialApp.router(
+            debugShowCheckedModeBanner: false,
+            title: 'Flutter Demo',
+            theme: themeData,
+            routeInformationParser: _goRouter.routeInformationParser,
+            routerDelegate: _goRouter.routerDelegate,
+            routeInformationProvider: _goRouter.routeInformationProvider,
+          );
+        },
+      ),
     );
   }
 }
