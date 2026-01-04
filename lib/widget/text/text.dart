@@ -47,7 +47,7 @@ class MyTextStyles {
     height: 1.7,
   );
   static final poppinsBold = GoogleFonts.poppins(
-    fontSize: 18,
+    fontSize: 28,
     fontWeight: FontWeight.w600,
     color: const Color(0xFF2E2C2C),
   );

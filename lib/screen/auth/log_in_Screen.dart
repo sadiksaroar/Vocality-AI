@@ -2,6 +2,7 @@
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vocality_ai/core/gen/assets.gen.dart';
+import 'package:vocality_ai/widget/brand_widget.dart';
 import 'package:vocality_ai/screen/auth/auth_controller/login_controller.dart';
 import 'package:vocality_ai/widget/color/apps_color.dart';
 import 'package:vocality_ai/widget/custom/custom_text_field.dart';
@@ -51,7 +52,7 @@ class _LogInScreenState extends State<LogInScreen> {
                 children: [
                   const SizedBox(height: 20),
 
-                  Assets.icons.k.image(width: 108, height: 126),
+                  BrandWidget(width: 108, height: 126),
                   const SizedBox(height: 16),
 
                   // Subtitle
@@ -291,6 +292,7 @@ import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:provider/provider.dart';
 import 'package:vocality_ai/core/gen/assets.gen.dart';
+import 'package:vocality_ai/widget/brand_widget.dart';
 import 'package:vocality_ai/screen/auth/auth_controller/login_controller.dart';
 import 'package:vocality_ai/widget/color/apps_color.dart';
 import 'package:vocality_ai/widget/custom/custom_text_field.dart';
@@ -337,7 +339,7 @@ class _LogInScreenState extends State<LogInScreen> {
                 crossAxisAlignment: CrossAxisAlignment.stretch,
                 children: [
                   const SizedBox(height: 20),
-                  Assets.icons.k.image(width: 108, height: 126),
+                  Center(child: BrandWidget(width: 108, height: 126)),
                   const SizedBox(height: 16),
                   Text(
                     'Welcome back! Login to your account',

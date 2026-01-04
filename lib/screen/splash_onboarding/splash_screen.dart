@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:vocality_ai/core/gen/assets.gen.dart';
+import 'package:vocality_ai/widget/brand_widget.dart';
 import 'package:vocality_ai/widget/color/apps_color.dart';
 
 class SplashScreen extends StatefulWidget {
@@ -15,6 +16,7 @@ class _SplashScreenState extends State<SplashScreen> {
   void initState() {
     super.initState();
     Future.delayed(const Duration(seconds: 5), () {
+      // ignore: use_build_context_synchronously
       context.push('/microphonePermissionScreen');
     });
   }
@@ -23,7 +25,7 @@ class _SplashScreenState extends State<SplashScreen> {
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: AppColors.yellowAmber,
-      body: Center(child: Assets.icons.k.image(width: 150, height: 150)),
+      body: Center(child: BrandWidget(width: 150, height: 150)),
     );
   }
 }

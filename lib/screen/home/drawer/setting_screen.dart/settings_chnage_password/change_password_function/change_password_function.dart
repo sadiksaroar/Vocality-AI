@@ -1,9 +1,10 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:vocality_ai/core/config/app_config.dart';
 import 'package:vocality_ai/screen/home/drawer/setting_screen.dart/settings_chnage_password/chage_password_model/chage_password_model.dart';
 
 class AuthRepository {
-  final String baseUrl = 'http://10.10.7.24:8000';
+  final String baseUrl = AppConfig.httpBase;
 
   Future<ChangePasswordResponse> changePassword({
     required String currentPassword,

@@ -1,5 +1,6 @@
 import 'dart:io';
 import 'package:http/http.dart' as http;
+import 'package:vocality_ai/core/config/app_config.dart';
 import 'dart:convert';
 
 import 'package:vocality_ai/models/image_analysis_response.dart';
@@ -7,7 +8,9 @@ import 'package:vocality_ai/screen/home/image_analysis_screen/model/model.dart'
     hide ImageAnalysisResponse;
 
 class ImageAnalysisService {
-  static const String baseUrl = 'http://10.10.7.24:8000';
+  // static const String baseUrl = 'http://10.10.7.24:8000'
+  static const String baseUrl = AppConfig.httpBase;
+
   static const String apiEndpoint = '/core/image-analysis-options/analyze/';
 
   Future<ApiResponse<ImageAnalysisResponse>> analyzeImage({

@@ -133,6 +133,7 @@
 
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
+import 'package:vocality_ai/core/config/app_config.dart';
 import 'package:vocality_ai/core/gen/assets.gen.dart';
 import 'package:vocality_ai/screen/home/drawer/personalty/personalty_model.dart';
 import 'package:vocality_ai/screen/home/drawer/personalty/profile_servic.dart';
@@ -144,7 +145,8 @@ import 'package:vocality_ai/core/gen/stroge_helper/stroge_helper.dart';
 class ProfileDrawer extends StatelessWidget {
   const ProfileDrawer({super.key});
 
-  static const String _baseUrl = 'http://10.10.7.24:8000';
+  // static const String _baseUrl = 'http://10.10.7.74:8000';
+  static const String _baseUrl = AppConfig.httpBase;
 
   @override
   Widget build(BuildContext context) {

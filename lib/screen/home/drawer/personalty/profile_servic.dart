@@ -1,10 +1,11 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:vocality_ai/core/config/app_config.dart';
 import 'package:vocality_ai/core/gen/stroge_helper/stroge_helper.dart';
 import 'package:vocality_ai/screen/home/drawer/personalty/personalty_model.dart';
 
 class ProfileService {
-  final String _baseUrl = 'http://10.10.7.24:8000';
+  final String _baseUrl = AppConfig.httpBase;
 
   Future<UserModel> fetchProfile() async {
     final token = await StorageHelper.getToken();

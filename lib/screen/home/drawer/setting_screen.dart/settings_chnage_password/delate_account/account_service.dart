@@ -1,11 +1,11 @@
-import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:vocality_ai/core/config/app_config.dart';
 import 'package:vocality_ai/core/gen/stroge_helper/stroge_helper.dart';
 import 'package:vocality_ai/screen/home/drawer/setting_screen.dart/settings_chnage_password/delate_account/model.dart';
 
 class AccountService {
   // Replace with your actual base URL
-  static const String baseUrl = 'http://10.10.7.24:8000';
+  static const String baseUrl = AppConfig.httpBase;
 
   Future<String?> getAuthToken() async {
     try {

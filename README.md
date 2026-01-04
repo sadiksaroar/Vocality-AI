@@ -401,3 +401,4 @@ curl -X POST http://10.10.7.24:8000/subscription/subscription/purchase_personali
   }'
 Support
 For issues or questions, contact backend team or check Django admin panel at: http://10.10.7.24:8000/admin/# nila
+# Vocality-AI-sub

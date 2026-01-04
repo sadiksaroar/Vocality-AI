@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vocality_ai/core/gen/assets.gen.dart';
+import 'package:vocality_ai/widget/brand_widget.dart';
 import 'package:vocality_ai/widget/custom/custom_text_field.dart';
 import 'package:vocality_ai/widget/custom/sign_in_custom.dart';
 import 'package:vocality_ai/widget/text/text.dart';
@@ -47,7 +48,7 @@ class _SignInScreenState extends State<SignInScreen> {
             children: [
               SizedBox(height: 40),
 
-              Assets.icons.k.image(width: 108, height: 126),
+              BrandWidget(width: 108, height: 126),
               const SizedBox(height: 8),
               Text(
                 "Sign up to get started with your account",
@@ -292,6 +293,7 @@ import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:vocality_ai/core/gen/assets.gen.dart';
+import 'package:vocality_ai/widget/brand_widget.dart';
 import 'package:vocality_ai/screen/auth/auth_controller/auth_contrloler.dart';
 import 'package:vocality_ai/widget/custom/custom_text_field.dart';
 import 'package:vocality_ai/widget/custom/sign_in_custom.dart';
@@ -354,7 +356,7 @@ class _SignInScreenState extends State<SignInScreen> {
             crossAxisAlignment: CrossAxisAlignment.center,
             children: [
               SizedBox(height: 40),
-              Assets.icons.k.image(width: 108, height: 126),
+              BrandWidget(width: 108, height: 126),
               const SizedBox(height: 8),
               Text(
                 "Sign up to get started with your account",

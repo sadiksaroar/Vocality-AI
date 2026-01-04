@@ -104,9 +104,9 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:vocality_ai/screen/home/image_analysis_screen/image_analysis_screen.dart';
 
-// void main() {
-//   runApp(const MyApp());
-// }
+void main() {
+  runApp(const MyApp());
+}
 void main() => runApp(
   DevicePreview(
     enabled: !kReleaseMode,

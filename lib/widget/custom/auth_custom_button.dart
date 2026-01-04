@@ -13,7 +13,7 @@ class AuthCustomButton extends StatelessWidget {
   final bool isFullWidth;
 
   const AuthCustomButton({
-    Key? key,
+    super.key,
     required this.text,
     required this.onPressed,
     this.backgroundColor,
@@ -24,7 +24,7 @@ class AuthCustomButton extends StatelessWidget {
     this.borderRadius = 30,
     this.elevation = 4,
     this.isFullWidth = true,
-  }) : super(key: key);
+  });
 
   @override
   Widget build(BuildContext context) {
