@@ -21,5 +21,7 @@ class AppPath {
   static const String settingsChangePassword = '/SettingsChangePassword';
   static const String purchaseScreen = '/purchaseScreen';
   static const String imageAnalysisScreen = '/imageAnalysisScreen';
+  static const String privacyPolicyScreen = '/privacyPolicyScreen';
+
   /*  home part end      */
 }

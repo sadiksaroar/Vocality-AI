@@ -11,6 +11,7 @@ import 'package:vocality_ai/screen/auth/resent_otp_screen.dart';
 import 'package:vocality_ai/screen/auth/sign_in_screen.dart';
 import 'package:vocality_ai/screen/home/drawer/profile_dashboard/profile_dashboard.dart';
 import 'package:vocality_ai/screen/home/drawer/purchase_screen/purchase_screen.dart';
+import 'package:vocality_ai/screen/home/drawer/setting_screen.dart/privacy_policy_screen/privacy_policy_screen.dart';
 import 'package:vocality_ai/screen/home/drawer/setting_screen.dart/setting_screen.dart';
 import 'package:vocality_ai/screen/home/drawer/setting_screen.dart/settings_chnage_password/settings_chnage_password.dart';
 import 'package:vocality_ai/screen/home/home_screen/contrller/controller.dart';
@@ -141,6 +142,13 @@ class AppPages {
         builder: (context, state) {
           // Replace with your ImageAnalysisScreen widget
           return const ImageAnalysisScreen();
+        },
+      ),
+      GoRoute(
+        path: AppPath.privacyPolicyScreen,
+        builder: (context, state) {
+          // Replace with your PrivacyPolicyScreen widget
+          return const PrivacyPolicyScreen();
         },
       ),
     ],

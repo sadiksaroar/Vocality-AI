@@ -364,7 +364,7 @@ class _HomeScreenState extends State<HomeScreen> {
                     ),
                   ),
                 ),
-                const SizedBox(height: 280),
+                const SizedBox(height: 90),
 
                 // Personality selector
                 const SizedBox(height: 12),
