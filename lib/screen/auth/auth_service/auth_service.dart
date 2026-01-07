@@ -14,6 +14,7 @@ class AuthService {
     required String name,
     required String password,
     required String password2,
+    String? couponCode,
   }) async {
     try {
       // Validate inputs
@@ -36,6 +37,7 @@ class AuthService {
         name: name,
         password: password,
         password2: password2,
+        couponCode: couponCode,
       );
 
       print('📤 Registration Request: ${request.toJson()}');

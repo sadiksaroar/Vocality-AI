@@ -17,6 +17,7 @@ class AuthController extends GetxController {
     required String password,
     required String password2,
     required BuildContext context,
+    String? couponCode,
   }) async {
     try {
       isLoading.value = true;
@@ -29,6 +30,7 @@ class AuthController extends GetxController {
         name: name,
         password: password,
         password2: password2,
+        couponCode: couponCode,
       );
 
       if (response.success) {

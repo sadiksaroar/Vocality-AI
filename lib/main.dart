@@ -44,17 +44,17 @@ import 'package:vocality_ai/screen/home/drawer/profile_dashboard/profile_control
 import 'package:vocality_ai/screen/home/drawer/setting_screen.dart/settings_chnage_password/contrlloer/contrlloer.dart';
 import 'package:vocality_ai/screen/routing/app_pages.dart';
 
-// void main() {
-//   runApp(
-//     DevicePreview(
-//       enabled: !kReleaseMode, // Enable only in development mode
-//       builder: (context) => MyApp(), // Wrap the app in DevicePreview
-//     ),
-//   );
-// }
 void main() {
-  runApp(MyApp());
+  runApp(
+    DevicePreview(
+      enabled: !kReleaseMode, // Enable only in development mode
+      builder: (context) => MyApp(), // Wrap the app in DevicePreview
+    ),
+  );
 }
+// void main() {
+//   runApp(MyApp());
+// }
 
 class MyApp extends StatelessWidget {
   const MyApp({super.key});

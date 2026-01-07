@@ -8,3 +8,15 @@ class AppConfig {
   static String resolveAudioUrl(String audioUrl) =>
       audioUrl.startsWith('http') ? audioUrl : '$audioBase$audioUrl';
 }
+/*
+// Base URLs and endpoints
+class AppConfig {
+  static const httpBase = 'http://api.thekaren.ai';
+  static const audioBase = 'http://10.10.7.118:8000';
+  static const aiWsBase = 'ws://10.10.7.118:8000';
+  static const sendMessagePath = '/core/conversations/send_message/';
+  static String get sendMessageUrl => '$httpBase$sendMessagePath';
+  static String resolveAudioUrl(String audioUrl) =>
+      audioUrl.startsWith('http') ? audioUrl : '$audioBase$audioUrl';
+}
+*/

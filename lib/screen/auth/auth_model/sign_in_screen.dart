@@ -5,21 +5,27 @@ class RegisterRequest {
   final String name;
   final String password;
   final String password2;
+  final String? couponCode;
 
   RegisterRequest({
     required this.email,
     required this.name,
     required this.password,
     required this.password2,
+    this.couponCode,
   });
 
   Map<String, dynamic> toJson() {
-    return {
+    final map = {
       'email': email,
       'name': name,
       'password': password,
       'password2': password2,
     };
+    if (couponCode != null && couponCode!.isNotEmpty) {
+      map['coupon_code'] = couponCode!;
+    }
+    return map;
   }
 }
 

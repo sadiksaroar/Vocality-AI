@@ -10,6 +10,7 @@ class ProfileModel {
   final double dailyMinutesUsed;
   final double dailyRemainingMinutes;
   final double totalAvailableMinutes;
+  final String couponId;
 
   ProfileModel({
     required this.id,
@@ -23,6 +24,7 @@ class ProfileModel {
     required this.dailyMinutesUsed,
     required this.dailyRemainingMinutes,
     required this.totalAvailableMinutes,
+    required this.couponId,
   });
 
   factory ProfileModel.fromJson(Map<String, dynamic> json) {
@@ -42,6 +44,7 @@ class ProfileModel {
       dailyMinutesUsed: (json['daily_minutes_used'] ?? 0).toDouble(),
       dailyRemainingMinutes: (json['daily_remaining_minutes'] ?? 0).toDouble(),
       totalAvailableMinutes: (json['total_available_minutes'] ?? 0).toDouble(),
+      couponId: json['coupon_id'] ?? '',
     );
   }
 }

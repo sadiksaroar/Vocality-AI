@@ -181,6 +181,7 @@ class CustomTextField extends StatelessWidget {
   final TextStyle? hintStyle;
   final FocusNode? focusNode;
   final void Function(String)? onChanged;
+  final TextCapitalization textCapitalization;
 
   const CustomTextField({
     Key? key,
@@ -195,6 +196,7 @@ class CustomTextField extends StatelessWidget {
     this.hintStyle,
     this.focusNode,
     this.onChanged,
+    this.textCapitalization = TextCapitalization.none,
   }) : super(key: key);
 
   @override
@@ -222,6 +224,7 @@ class CustomTextField extends StatelessWidget {
           validator: validator,
           focusNode: focusNode,
           onChanged: onChanged,
+          textCapitalization: textCapitalization,
           decoration: InputDecoration(
             hintText: hintText,
             hintStyle:
