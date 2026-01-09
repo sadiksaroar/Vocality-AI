@@ -50,9 +50,10 @@ class AuthService {
             body: json.encode(request.toJson()),
           )
           .timeout(
-            const Duration(seconds: 10),
-            onTimeout: () =>
-                throw 'Request timeout. Please check your connection.',
+            const Duration(seconds: 30),
+            onTimeout: () => throw Exception(
+              'Request timeout. Please check your connection.',
+            ),
           );
 
       print('📥 Status Code: ${response.statusCode}');

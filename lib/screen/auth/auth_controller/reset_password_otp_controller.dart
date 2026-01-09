@@ -60,7 +60,7 @@ class ResetPasswordOtpController extends GetxController {
           context.push("/passwordChangeScreen");
         }
       } else {
-        errorMessage.value = response.message ?? 'OTP verification failed';
+        errorMessage.value = response.message;
         if (context.mounted) {
           _showSnackbar(context, errorMessage.value, isError: true);
         }

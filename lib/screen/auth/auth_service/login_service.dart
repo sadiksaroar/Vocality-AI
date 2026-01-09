@@ -1,5 +1,5 @@
 import 'package:http/http.dart' as http;
-import 'package:vocality_ai/core/base/base_url.dart';
+import 'package:vocality_ai/core/config/app_config.dart';
 import 'package:vocality_ai/screen/auth/auth_model/login_model.dart';
 import 'dart:convert';
 import 'dart:io';

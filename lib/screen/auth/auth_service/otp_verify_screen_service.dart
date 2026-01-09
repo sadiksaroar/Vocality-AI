@@ -15,11 +15,18 @@ class AuthRepository {
       print('OTP Verification Request URL: $baseUrl/accounts/user/verify-otp/');
       print('OTP Verification Request Body: ${json.encode(request.toJson())}');
 
-      final response = await http.post(
-        Uri.parse('$baseUrl/accounts/user/verify-otp/'),
-        headers: {'Content-Type': 'application/json'},
-        body: json.encode(request.toJson()),
-      );
+      final response = await http
+          .post(
+            Uri.parse('$baseUrl/accounts/user/verify-otp/'),
+            headers: {'Content-Type': 'application/json'},
+            body: json.encode(request.toJson()),
+          )
+          .timeout(
+            const Duration(seconds: 30),
+            onTimeout: () => throw Exception(
+              'Request timeout. Please check your connection.',
+            ),
+          );
 
       print('OTP Verification Response Status: ${response.statusCode}');
       print('OTP Verification Response Body: ${response.body}');

@@ -1,6 +1,6 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
-import 'package:vocality_ai/core/base/base_url.dart';
+import 'package:vocality_ai/core/config/app_config.dart';
 import 'package:vocality_ai/core/gen/stroge_helper/stroge_helper.dart';
 
 class ApiService {

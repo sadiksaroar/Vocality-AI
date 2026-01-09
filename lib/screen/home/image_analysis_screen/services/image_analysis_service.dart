@@ -189,7 +189,7 @@ import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
 import 'package:http/http.dart' as http;
 import 'dart:convert';
-import 'package:vocality_ai/core/base/base_url.dart';
+import 'package:vocality_ai/core/config/app_config.dart';
 import 'package:vocality_ai/models/image_analysis_response.dart';
 import 'package:vocality_ai/screen/home/image_analysis_screen/services/audio.dart';
 

@@ -150,7 +150,11 @@ class PasswordChangeController extends GetxController {
 
       request.headers.addAll(headers);
 
-      http.StreamedResponse response = await request.send();
+      http.StreamedResponse response = await request.send().timeout(
+        const Duration(seconds: 30),
+        onTimeout: () =>
+            throw Exception('Request timeout. Please check your connection.'),
+      );
       print('Change Password Response Status: ${response.statusCode}');
 
       String responseBody = await response.stream.bytesToString();
