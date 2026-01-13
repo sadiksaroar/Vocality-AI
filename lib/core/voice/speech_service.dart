@@ -7,20 +7,34 @@ class SpeechService {
   bool get isListening => _speech.isListening;
 
   Future<bool> start(void Function(String text) onText) async {
-    final ok = await _speech.initialize();
-    if (!ok) return false;
-    lastText = '';
-    await _speech.listen(
-      onResult: (r) {
-        lastText = r.recognizedWords;
-        onText(lastText);
-      },
-    );
-    return true;
+    try {
+      final ok = await _speech.initialize(
+        onError: (error) => print('Speech recognition error: $error'),
+        onStatus: (status) => print('Speech status: $status'),
+      );
+      if (!ok) return false;
+      lastText = '';
+      await _speech.listen(
+        onResult: (r) {
+          lastText = r.recognizedWords;
+          onText(lastText);
+        },
+        listenMode: stt.ListenMode.confirmation,
+      );
+      return true;
+    } catch (e) {
+      print('Failed to start speech recognition: $e');
+      return false;
+    }
   }
 
   Future<String> stop() async {
-    await _speech.stop();
-    return lastText.trim();
+    try {
+      await _speech.stop();
+      return lastText.trim();
+    } catch (e) {
+      print('Failed to stop speech recognition: $e');
+      return lastText.trim();
+    }
   }
 }
