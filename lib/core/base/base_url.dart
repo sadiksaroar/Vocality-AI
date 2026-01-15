@@ -11,11 +11,11 @@
 // /*
 // Base URLs and endpoints
 class AppConfig {
-  static const httpBase = 'http://api.thekaren.ai';
-  static const audioBase = 'https://thekaren.ai';
-  static const aiWsBase = 'wss://thekaren.ai';
+  static const httpBase = 'https://api.thekaren.ai';
+  static const audioBase = 'https://ai.thekaren.ai';
+  static const aiWsBase = 'wss://ai.thekaren.ai';
   static const sendMessagePath = '/core/conversations/send_message/';
   static String get sendMessageUrl => '$httpBase$sendMessagePath';
   static String resolveAudioUrl(String audioUrl) =>
-      audioUrl.startsWith('http') ? audioUrl : '$audioBase$audioUrl';
+      audioUrl.startsWith('https') ? audioUrl : '$audioBase$audioUrl';
 }

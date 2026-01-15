@@ -1,6 +1,5 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:vocality_ai/core/gen/assets.gen.dart';
 import 'package:vocality_ai/widget/brand_widget.dart';
 import 'package:vocality_ai/widget/color/apps_color.dart';
 

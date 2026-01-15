@@ -1,5 +1,3 @@
-import 'package:flutter/material.dart';
-import 'package:get/get.dart';
 import 'package:go_router/go_router.dart';
 import 'package:provider/provider.dart';
 import 'package:vocality_ai/screen/auth/auth_controller/login_controller.dart';
@@ -11,17 +9,15 @@ import 'package:vocality_ai/screen/auth/resent_otp_screen.dart';
 import 'package:vocality_ai/screen/auth/sign_in_screen.dart';
 import 'package:vocality_ai/screen/home/drawer/profile_dashboard/profile_dashboard.dart';
 import 'package:vocality_ai/screen/home/drawer/purchase_screen/purchase_screen.dart';
-import 'package:vocality_ai/screen/home/drawer/setting_screen.dart/privacy_policy_screen/privacy_policy_screen.dart';
+import 'package:vocality_ai/screen/home/drawer/setting_screen.dart/privacy_policy_screen/privacy%20policy.dart';
 import 'package:vocality_ai/screen/home/drawer/setting_screen.dart/setting_screen.dart';
 import 'package:vocality_ai/screen/home/drawer/setting_screen.dart/settings_chnage_password/settings_chnage_password.dart';
-import 'package:vocality_ai/screen/home/home_screen/contrller/controller.dart';
 import 'package:vocality_ai/screen/home/home_screen/home_screen.dart';
 import 'package:vocality_ai/screen/home/image_analysis_screen/image_analysis_screen.dart';
 import 'package:vocality_ai/screen/routing/app_path.dart';
 import 'package:vocality_ai/screen/splash_onboarding/micrio_phone_acces.dart';
 import 'package:vocality_ai/screen/splash_onboarding/splash_screen.dart';
 import 'package:vocality_ai/screen/splash_onboarding/tap_to_start.dart';
-import 'package:vocality_ai/core/gen/stroge_helper/stroge_helper.dart';
 
 class AppPages {
   static final GoRouter router = GoRouter(

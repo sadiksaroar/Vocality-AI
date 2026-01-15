@@ -1,7 +1,7 @@
+import 'package:flutter/foundation.dart';
 import 'package:get/get.dart';
 import 'package:record/record.dart';
 import 'package:vocality_ai/screen/home/image_analysis_screen/services/voice_chat_service.dart';
-import 'package:vocality_ai/models/voice_chat_models.dart';
 import 'dart:typed_data';
 
 class VoiceChatController extends GetxController {
@@ -39,7 +39,9 @@ class VoiceChatController extends GetxController {
           case 'connected':
             isConnected.value = true;
             errorMessage.value = '';
-            print('WebSocket connected');
+            // print('WebSocket connected');
+            debugPrint("Connected to server");
+
             break;
 
           case 'session_started':

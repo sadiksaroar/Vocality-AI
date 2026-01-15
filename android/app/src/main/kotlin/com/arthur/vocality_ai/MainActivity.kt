@@ -1,6 +1,5 @@
-package com.example.vocality_ai
+package com.arthur.vocality_ai
 
 import io.flutter.embedding.android.FlutterActivity
 
 class MainActivity : FlutterActivity()
-

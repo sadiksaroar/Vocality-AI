@@ -1,5 +1,3 @@
-import 'dart:convert';
-
 // AI Response Model
 class AIResponse {
   final String type;

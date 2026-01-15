@@ -58,8 +58,8 @@ class AppConfig {
 
 class AppConfig {
   static const String httpBase = 'https://api.thekaren.ai';
-  static const String audioBase = 'https://thekaren.ai';
-  static const String wsBase = 'wss://thekaren.ai';
+  static const String audioBase = 'https://ai.thekaren.ai';
+  static const String wsBase = 'wss://ai.thekaren.ai';
 
   static const String sendMessagePath = '/core/conversations/send_message/';
   static const String endActivePath = '/core/conversations/end-active/';
@@ -69,17 +69,10 @@ class AppConfig {
   static String get endActiveUrl => '$httpBase$endActivePath';
   static String get logoUrl => '$httpBase$logoPath';
 
-  // static String resolveAudioUrl(String audioUrl) {
-  //   if (audioUrl.startsWith('http')) {
-  //     final uri = Uri.parse(audioUrl);
-  //     return uri.replace(host: 'thekaren.ai').toString();
-  //   }
-  //   return '$audioBase$audioUrl';
-  // }
   static String resolveAudioUrl(String audioUrl) {
-    if (audioUrl.startsWith('http')) {
+    if (audioUrl.startsWith('https')) {
       // Replace .24 with .118 for audio URLs
-      return audioUrl.replaceAll('api.thekaren.ai', 'thekaren.ai');
+      return audioUrl.replaceAll('api.thekaren.ai', 'ai.thekaren.ai');
     }
     return '$audioBase$audioUrl';
   }

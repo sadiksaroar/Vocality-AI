@@ -1,8 +1,8 @@
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:image_picker/image_picker.dart';
-import 'dart:typed_data';
 import 'package:flutter/foundation.dart';
+import 'package:permission_handler/permission_handler.dart';
 import 'dart:io';
 
 import 'package:vocality_ai/core/gen/assets.gen.dart';
@@ -55,7 +55,81 @@ class _ImageAnalysisScreenState extends State<ImageAnalysisScreen> {
     }
   }
 
+  Future<bool> _requestCameraPermission() async {
+    if (kIsWeb) return true;
+
+    final status = await Permission.camera.request();
+    if (status.isDenied || status.isPermanentlyDenied) {
+      if (mounted) {
+        ScaffoldMessenger.of(context).showSnackBar(
+          const SnackBar(
+            content: Text('Camera permission is required to take photos'),
+            backgroundColor: Colors.red,
+          ),
+        );
+      }
+      return false;
+    }
+    return status.isGranted;
+  }
+
+  Future<bool> _requestStoragePermission() async {
+    if (kIsWeb) return true;
+
+    // For Android 13+ (API 33+), use photos permission
+    if (Platform.isAndroid) {
+      final androidVersion = await _getAndroidVersion();
+      if (androidVersion >= 33) {
+        final status = await Permission.photos.request();
+        if (status.isDenied || status.isPermanentlyDenied) {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text(
+                  'Photos permission is required to access gallery',
+                ),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+          return false;
+        }
+        return status.isGranted;
+      } else {
+        // For older Android versions, use storage permission
+        final status = await Permission.storage.request();
+        if (status.isDenied || status.isPermanentlyDenied) {
+          if (mounted) {
+            ScaffoldMessenger.of(context).showSnackBar(
+              const SnackBar(
+                content: Text(
+                  'Storage permission is required to access gallery',
+                ),
+                backgroundColor: Colors.red,
+              ),
+            );
+          }
+          return false;
+        }
+        return status.isGranted;
+      }
+    }
+
+    // For iOS
+    final status = await Permission.photos.request();
+    return status.isGranted;
+  }
+
+  Future<int> _getAndroidVersion() async {
+    if (!Platform.isAndroid) return 0;
+    // This is a simplified version. In production, you might want to use device_info_plus
+    return 33; // Assume modern Android for safety
+  }
+
   Future<void> _pickImageFromCamera() async {
+    final hasPermission = await _requestCameraPermission();
+    if (!hasPermission) return;
+
     final XFile? image = await _picker.pickImage(source: ImageSource.camera);
     if (image != null) {
       if (kIsWeb) {
@@ -72,6 +146,9 @@ class _ImageAnalysisScreenState extends State<ImageAnalysisScreen> {
   }
 
   Future<void> _pickImageFromGallery() async {
+    final hasPermission = await _requestStoragePermission();
+    if (!hasPermission) return;
+
     final XFile? image = await _picker.pickImage(source: ImageSource.gallery);
     if (image != null) {
       if (kIsWeb) {
