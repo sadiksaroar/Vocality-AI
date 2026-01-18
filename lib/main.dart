@@ -15,8 +15,9 @@ import 'package:vocality_ai/screen/routing/app_pages.dart';
 //     ),
 //   );
 // }
+
 void main() {
-  runApp(MyApp());
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
@@ -34,18 +35,21 @@ class MyApp extends StatelessWidget {
         splitScreenMode: true,
         designSize: const Size(375, 812),
         builder: (context, child) {
-          var themeData = ThemeData(
+          final themeData = ThemeData(
             colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
             textTheme: GoogleFonts.poppinsTextTheme(),
+            useMaterial3: true, // Added for better Material Design 3 support
           );
-          final _goRouter = AppPages.router;
+
+          final goRouter = AppPages.router;
+
           return GetMaterialApp.router(
             debugShowCheckedModeBanner: false,
-            title: 'Flutter Demo',
+            title: 'Vocality AI',
             theme: themeData,
-            routeInformationParser: _goRouter.routeInformationParser,
-            routerDelegate: _goRouter.routerDelegate,
-            routeInformationProvider: _goRouter.routeInformationProvider,
+            routeInformationParser: goRouter.routeInformationParser,
+            routerDelegate: goRouter.routerDelegate,
+            routeInformationProvider: goRouter.routeInformationProvider,
           );
         },
       ),
